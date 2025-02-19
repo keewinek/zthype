@@ -7,7 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
 import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
-
+import * as $MediaMentionsMakeOrderPanel from "./islands/MediaMentionsMakeOrderPanel.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -18,7 +18,9 @@ const manifest = {
     "./routes/index.tsx": $index,
     "./routes/media_mentions.tsx": $media_mentions,
   },
-  islands: {},
+  islands: {
+    "./islands/MediaMentionsMakeOrderPanel.tsx": $MediaMentionsMakeOrderPanel,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 

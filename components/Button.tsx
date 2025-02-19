@@ -18,7 +18,7 @@ export default function Button(
     let button_final_class = "";
 
     if (border) {
-        button_final_class += "border-brand-pink border-[1px] ";
+        button_final_class += "border-pink border-[1px] ";
     } else if (gray) {
         button_final_class += "bg-pink ";
     } else {
