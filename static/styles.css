@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {@apply bg-background text-white}
+div.panel {@apply mx-auto w-full max-w-[40rem] max-md:px-8;}
+h2 {@apply text-2xl}
+h1 {@apply text-5xl text-center;}
+
+.form-group { @apply w-full mt-2; }
+label { @apply text-base text-white block w-full opacity-90; }
+input[type="text"], textarea { @apply bg-background border-b-[1px] border-b-pink placeholder-gray rounded-none outline-none duration-200 pb-[2px]; }
+
+textarea { @apply resize-none h-32}
+
+/* Scroll ball */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: none; }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* No scroll bar */
+.no-scroll-bar::-webkit-scrollbar { width: 0px; }
+.no-scroll-bar::-webkit-scrollbar-track { background: none; }
+.no-scroll-bar::-webkit-scrollbar-thumb { background: none; border-radius: 5px; }
+.no-scroll-bar::-webkit-scrollbar-thumb:hover { background: none; }
+
+/* Checkbox */
+.checkbox-box {@apply select-none cursor-pointer my-0 rounded-md overflow-hidden duration-200 inline-block text-gray}
+.checkbox-box label {@apply hover:bg-background-light p-2 rounded-md}
+.checkbox-box label span {@apply float-left align-middle mr-2 w-6 h-6 rounded-md border-[1px] relative border-gray duration-200}
+.checkbox-box label span i {@apply hidden}
+input[type="checkbox"] { @apply absolute invisible; }
+input[type="checkbox"]:checked + label span { @apply bg-pink border-pink; }
+input[type="checkbox"]:checked + label span i { @apply block absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]; }
