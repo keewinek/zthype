@@ -26,9 +26,9 @@ textarea { @apply resize-none h-32}
 .no-scroll-bar::-webkit-scrollbar-thumb:hover { background: none; }
 
 /* Checkbox */
-.checkbox-box {@apply select-none cursor-pointer my-0 rounded-md overflow-hidden duration-200 inline-block text-gray}
-.checkbox-box label {@apply hover:bg-background-light p-2 rounded-md}
-.checkbox-box label span {@apply float-left align-middle mr-2 w-6 h-6 rounded-md border-[1px] relative border-gray duration-200}
+.checkbox-box {@apply select-none my-0 rounded-md overflow-hidden duration-200 inline-block text-gray cursor-pointer}
+.checkbox-box label {@apply hover:bg-background-light p-2 rounded-md cursor-pointer}
+.checkbox-box label span {@apply float-left align-middle mr-2 w-6 h-6 rounded-md border-[1px] relative border-gray duration-200 cursor-pointer}
 .checkbox-box label span i {@apply hidden}
 input[type="checkbox"] { @apply absolute invisible; }
 input[type="checkbox"]:checked + label span { @apply bg-pink border-pink; }

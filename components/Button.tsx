@@ -1,6 +1,7 @@
 interface ButtonProps {
     onClick?: () => void;
     className?: string;
+    iconClassName?: string;
     href?: string;
     target?: string;
     disabled?: boolean;
@@ -13,7 +14,7 @@ interface ButtonProps {
 }
 
 export default function Button(
-    { onClick, className="", href, target="", disabled=false, border=false, gray=false, fa_icon, text="", full=false, icon_on_right=false}: ButtonProps
+    { onClick, className="", href, target="", disabled=false, border=false, gray=false, fa_icon, text="", full=false, icon_on_right=false, iconClassName=""}: ButtonProps
 ) {
     let button_final_class = "";
 
@@ -52,8 +53,8 @@ export default function Button(
             disabled={disabled}
             class={`${button_final_class} ${className}`}
         >
-            {fa_icon && !icon_on_right && <i class={`fa-solid fa-${fa_icon} mr-2`}></i>}
-            <span class="flex-grow">{text}</span>
+            {fa_icon && !icon_on_right && <i class={`fa-solid fa-${fa_icon} mr-2 ${iconClassName}`}></i>}
+            <span class={`flex-grow`}>{text}</span>
             {fa_icon && icon_on_right && <i class={`fa-solid fa-${fa_icon} mr-2`}></i>}
         </a>
     

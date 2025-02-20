@@ -5,9 +5,12 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_order_media_mention from "./routes/api/order_media_mention.ts";
 import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
+import * as $order_order_id_ from "./routes/order/[order_id].tsx";
 import * as $MediaMentionsMakeOrderPanel from "./islands/MediaMentionsMakeOrderPanel.tsx";
+import * as $OrderPage from "./islands/OrderPage.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -15,11 +18,14 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/api/order_media_mention.ts": $api_order_media_mention,
     "./routes/index.tsx": $index,
     "./routes/media_mentions.tsx": $media_mentions,
+    "./routes/order/[order_id].tsx": $order_order_id_,
   },
   islands: {
     "./islands/MediaMentionsMakeOrderPanel.tsx": $MediaMentionsMakeOrderPanel,
+    "./islands/OrderPage.tsx": $OrderPage,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
