@@ -4,12 +4,12 @@ export default function HomeServiceButton(
 )
 {
     return (
-        <a href={disabled ? "" : href} class={`border-[1px] border-background-light flex  p-4 rounded-md my-2 duration-200  ${disabled ? "opacity-50 cursor-not-allowed" : "group hover:bg-background-light"}`}>
+        <a href={disabled ? "" : href} class={`border-[1px] border-background-light flex  p-4 rounded-md my-2 duration-200 hover:no-underline ${disabled ? "opacity-50 cursor-not-allowed" : "group hover:bg-background-light"}`}>
             <div class="flex-row p-2 mr-4">
-                <i class={`fa-solid fa-${fa_icon} text-5xl w-16 group-hover:text-pink`}></i>
+                <i class={`fa-solid fa-${fa_icon} text-5xl text-white w-16 group-hover:text-pink duration-200`}></i>
             </div>
             <div class="flex-row">
-                <h2 class="mb-1 duration-200 group-hover:text-pink ">{title}</h2>
+                <h2 class="mb-1 duration-200 text-white group-hover:text-pink ">{title}</h2>
                 <p class="text-gray  duration-200 group-hover:text-white">{description}</p>
             </div>
         </a>

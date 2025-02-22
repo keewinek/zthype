@@ -1,4 +1,5 @@
 import { FreshContext } from "$fresh/server.ts";
+import OrderMediaMentionData from "../../interfaces/MediaMentionData.ts";
 import Order from "../../interfaces/Order.ts";
 import { create_order, get_next_order_id } from "../../utils/database.ts";
 
@@ -44,8 +45,9 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 			project_desc: project_desc,
 			project_link: project_link,
 			project_zt_link: project_zt_link,
-			selected_sources: selected_sources,
-		},
+			selected_sources: selected_sources.split(","),
+			completed_urls: []
+		} as OrderMediaMentionData,
 	};
 
 	create_order(order);

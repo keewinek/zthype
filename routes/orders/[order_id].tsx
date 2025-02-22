@@ -1,5 +1,5 @@
 import { PageProps } from "$fresh/server.ts";
-import TopNav from "../../components/TopNav.tsx";
+import TopNav from "../../islands/TopNav.tsx";
 import OrderPage from "../../islands/OrderPage.tsx";
 
 export default function OrderPageWrapper(props: PageProps) {

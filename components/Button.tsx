@@ -26,7 +26,7 @@ export default function Button(
         button_final_class += "bg-pink ";
     }
 
-    button_final_class += "text-pink-50 p-2 inline-flex items-center rounded-md text-center hover:no-underline duration-200 "
+    button_final_class += "text-white p-2 inline-flex items-center rounded-md text-center hover:no-underline duration-200 "
 
     if (disabled) {
         button_final_class += "opacity-50 cursor-not-allowed ";

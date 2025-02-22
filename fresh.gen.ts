@@ -4,28 +4,40 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_get_order from "./routes/api/get_order.ts";
+import * as $api_get_orders from "./routes/api/get_orders.ts";
 import * as $api_order_media_mention from "./routes/api/order_media_mention.ts";
 import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
-import * as $order_order_id_ from "./routes/order/[order_id].tsx";
+import * as $orders_order_id_ from "./routes/orders/[order_id].tsx";
+import * as $orders_index from "./routes/orders/index.tsx";
+import * as $LoadingScreen from "./islands/LoadingScreen.tsx";
 import * as $MediaMentionsMakeOrderPanel from "./islands/MediaMentionsMakeOrderPanel.tsx";
+import * as $MyOrdersPage from "./islands/MyOrdersPage.tsx";
 import * as $OrderPage from "./islands/OrderPage.tsx";
+import * as $SplashScreen from "./islands/SplashScreen.tsx";
+import * as $TopNav from "./islands/TopNav.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
-    "./routes/api/joke.ts": $api_joke,
+    "./routes/api/get_order.ts": $api_get_order,
+    "./routes/api/get_orders.ts": $api_get_orders,
     "./routes/api/order_media_mention.ts": $api_order_media_mention,
     "./routes/index.tsx": $index,
     "./routes/media_mentions.tsx": $media_mentions,
-    "./routes/order/[order_id].tsx": $order_order_id_,
+    "./routes/orders/[order_id].tsx": $orders_order_id_,
+    "./routes/orders/index.tsx": $orders_index,
   },
   islands: {
+    "./islands/LoadingScreen.tsx": $LoadingScreen,
     "./islands/MediaMentionsMakeOrderPanel.tsx": $MediaMentionsMakeOrderPanel,
+    "./islands/MyOrdersPage.tsx": $MyOrdersPage,
     "./islands/OrderPage.tsx": $OrderPage,
+    "./islands/SplashScreen.tsx": $SplashScreen,
+    "./islands/TopNav.tsx": $TopNav,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

@@ -1,7 +1,8 @@
 import Button from "../components/Button.tsx";
 import HomeServiceButton from "../components/HomeServiceButton.tsx";
-import TopNav from "../components/TopNav.tsx";
+import TopNav from "../islands/TopNav.tsx";
 import { MediaMentionsMakeOrderPanel } from "../islands/MediaMentionsMakeOrderPanel.tsx";
+import SplashScreen from "../islands/SplashScreen.tsx";
 
 export default function Home() {
     return (
@@ -10,6 +11,7 @@ export default function Home() {
                 <title>Zdobądź wzmianki medialne do twojego projektu - ZTHype</title>
             </head>
             <body>
+                <SplashScreen/>
                 <TopNav/>
                 <div class="panel">
                     <h1 class="my-4">Zdobądź <span class="text-pink">wzmianki medialne</span>.</h1>

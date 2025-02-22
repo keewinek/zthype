@@ -7,6 +7,8 @@ div.panel {@apply mx-auto w-full max-w-[40rem] max-md:px-8;}
 h2 {@apply text-2xl}
 h1 {@apply text-5xl text-center;}
 
+a { @apply text-pink no-underline hover:underline; }
+
 .form-group { @apply w-full mt-2; }
 label { @apply text-base text-white block w-full opacity-90; }
 input[type="text"], textarea { @apply bg-background border-b-[1px] border-b-pink placeholder-gray rounded-none outline-none duration-200 pb-[2px]; }

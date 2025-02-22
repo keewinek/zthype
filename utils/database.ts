@@ -107,6 +107,8 @@ export async function get_order_by_value(key: string, value: any)
     connect_client()
     if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
 
+    console.log(`[DB Orders] Getting order by ${key} = ${value}`)
+
     const result = await databases.listDocuments(
         database_id, // databaseId
         orders_id, // collectionId

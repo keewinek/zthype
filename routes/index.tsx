@@ -1,5 +1,6 @@
 import HomeServiceButton from "../components/HomeServiceButton.tsx";
-import TopNav from "../components/TopNav.tsx";
+import TopNav from "../islands/TopNav.tsx";
+import SplashScreen from "../islands/SplashScreen.tsx";
 
 export default function Home() {
 	return (
@@ -8,6 +9,7 @@ export default function Home() {
 				<title>ZTHype</title>
 			</head>
 			<body>
+				<SplashScreen/>
 				<TopNav/>
 
 				<h1 class="my-8">ZTHype</h1>
