@@ -5,5 +5,6 @@ export default interface OrderMediaMentionData
     project_link: string,
     project_zt_link: string,
     selected_sources: string[],
+    completed_sources: string[],
     completed_urls: string[],
 }

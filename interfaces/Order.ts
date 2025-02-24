@@ -6,6 +6,8 @@ export default interface Order {
     moderated: boolean;
     complete: boolean;
     type: string;
+    rejected: boolean;
+    reject_reason: string;
     data?: object;
 }
 

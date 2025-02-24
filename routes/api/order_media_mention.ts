@@ -40,13 +40,16 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 		moderated: false,
 		contact_email: contact_email,
 		type: "media_mention",
+		rejected: false,
+		reject_reason: "",
 		data: {
 			project_name: project_name,
 			project_desc: project_desc,
 			project_link: project_link,
 			project_zt_link: project_zt_link,
 			selected_sources: selected_sources.split(","),
-			completed_urls: []
+			completed_sources: [],
+			completed_urls: [],
 		} as OrderMediaMentionData,
 	};
 

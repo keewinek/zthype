@@ -4,6 +4,8 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_admin_accept_order from "./routes/api/admin_accept_order.ts";
+import * as $api_admin_reject_order from "./routes/api/admin_reject_order.ts";
 import * as $api_get_order from "./routes/api/get_order.ts";
 import * as $api_get_orders from "./routes/api/get_orders.ts";
 import * as $api_order_media_mention from "./routes/api/order_media_mention.ts";
@@ -23,6 +25,8 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/admin_accept_order.ts": $api_admin_accept_order,
+    "./routes/api/admin_reject_order.ts": $api_admin_reject_order,
     "./routes/api/get_order.ts": $api_get_order,
     "./routes/api/get_orders.ts": $api_get_orders,
     "./routes/api/order_media_mention.ts": $api_order_media_mention,

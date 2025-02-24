@@ -74,6 +74,8 @@ export function get_only_order_keys(order: Order)
         moderated: order.moderated,
         complete: order.complete,
         type: order.type,
+        rejected: order.rejected,
+        reject_reason: order.reject_reason,
         data: order.data,
     } as Order
 }
@@ -89,6 +91,8 @@ export function get_database_order(order: Order)
         moderated: order.moderated,
         complete: order.complete,
         type: order.type,
+        rejected: order.rejected,
+        reject_reason: order.reject_reason,
         data_string: JSON.stringify(order.data)
     } as DatabaseOrder
 }
