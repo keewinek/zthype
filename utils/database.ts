@@ -1,12 +1,14 @@
 import * as sdk from "https://deno.land/x/appwrite/mod.ts";
 import { send_error, send_log } from "../utils/discord_webhook_sender.ts"
 import Order, { DatabaseOrder } from "../interfaces/Order.ts";
+import { Article } from "../interfaces/Article.ts";
 
 const project_id = "67b7809d0024db75ac21";
 
 const database_id = "67b780b2001dde402201";
 
 const orders_id = "67b780d20037648a5b17";
+const articles_id = "67bcb076000438b62272";
 
 const add_to_order_id = 1000;
 
@@ -106,25 +108,46 @@ export function get_order_from_database_order(database_order: DatabaseOrder)
     } as Order
 }
 
-export async function get_order_by_value(key: string, value: any)
+export async function get_orders_by_queries(query: string[])
 {
     connect_client()
     if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
 
-    console.log(`[DB Orders] Getting order by ${key} = ${value}`)
-
     const result = await databases.listDocuments(
         database_id, // databaseId
         orders_id, // collectionId
-        [
-            sdk.Query.equal(key, value)
-        ]
+        query
     );
 
     if (result.documents.length == 0) return null;
 
-    return get_order_from_database_order(result.documents[0] as unknown as DatabaseOrder);
+    return result.documents.map(doc => get_order_from_database_order(doc as unknown as DatabaseOrder));
 }
+
+export async function get_articles_by_queries(query: string[])
+{
+    connect_client()
+    if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+
+    const result = await databases.listDocuments(
+        database_id, // databaseId
+        articles_id, // collectionId
+        query
+    );
+
+    if (result.documents.length == 0) return null;
+
+    return result.documents.map(doc => doc as unknown as Article);
+}
+
+export async function get_order_by_value(key: string, value: any)
+{
+    connect_client()
+    if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+    const orders = await get_orders_by_queries([sdk.Query.equal(key, value)]);
+    return Array.isArray(orders) ? orders[0] : null;
+}
+
 
 export async function get_next_order_id()
 {
@@ -165,6 +188,26 @@ export async function update_order(order: Order) {
     }
 }
 
+export async function update_article(article: Article) {
+    try {
+        connect_client()
+        if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+    
+        const result = await databases.updateDocument(
+            database_id, // databaseId
+            articles_id, // collectionId
+            article.uuid, // documentId
+            article, // data (optional)
+        );
+    
+        return result;
+    }
+    catch (e) {
+        send_error(`[DB Articles] Failed to update order: ${e}`)
+        return {"error" : e};
+    } 
+}
+
 export async function create_order(order: Order)
 {
     connect_client()
@@ -172,8 +215,7 @@ export async function create_order(order: Order)
 
     console.log(`[DB orders] 1 Creating order: ${order}`)
 
-    if (await get_order_by_value("uuid", order.uuid) != null)
-    {
+    if (await get_order_by_value("uuid", order.uuid) != null) {
         return {"error" : "Order already exists in database."};
     }
 
@@ -184,6 +226,24 @@ export async function create_order(order: Order)
         get_database_order(order), // Data
     )
     
+    if (result.$id != null){
+        return {"success" : true, "response" : result};
+    }
+
+    return {"error" : result};
+}
+
+export async function create_article(article: Article) {
+    connect_client()
+    if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+
+    const result = await databases.createDocument(
+        database_id, // Database ID
+        articles_id, // Collection ID
+        article.uuid, // Document ID
+        article, // Data
+    )
+
     if (result.$id != null){
         return {"success" : true, "response" : result};
     }

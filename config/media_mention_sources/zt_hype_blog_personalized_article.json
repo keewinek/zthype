@@ -1,0 +1,7 @@
+{
+    "type": "personalized",
+    "id": "zt_hype_blog_personalized_article",
+    "url": "https://zthype.deno.dev/blog/%urlid%",
+    "max_orders": 1,
+    "prompt": "Napisz artykuł o projekcie społecznym Zwolnionych z Teorii, który się nazywa %project_title%. Opis projektu: %project_description%. Wymyśl tytuł artykułu, a cały artykuł odeślij do mnie w formacie JSON, który będzie wyglądał tak: {\"title\": \"TU WPISZ TYTUŁ\", \"content\": \"TU WPISZ TREŚĆ\"}. Treść powinna mieć ok. 200 słów i nie mieć żadnego formatowania, ani pogrubionego tekstu, ani headerów ani niczego w tym stylu."
+}
