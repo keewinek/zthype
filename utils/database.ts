@@ -78,8 +78,25 @@ export function get_only_order_keys(order: Order)
         type: order.type,
         rejected: order.rejected,
         reject_reason: order.reject_reason,
+        updated_at: order.updated_at,
         data: order.data,
     } as Order
+}
+
+export function get_only_article_keys(article: Article)
+{
+    return {
+        type: article.type,
+        title: article.title,
+        urlid: article.urlid,
+        source_id: article.source_id,
+        url: article.url,
+        order_ids: article.order_ids,
+        order_ids_count: article.order_ids_count,
+        paragraph: article.paragraph,
+        created_at: article.created_at,
+        uuid: article.uuid
+    } as Article
 }
 
 // Get order without data, because it wont fit in our database.
@@ -94,8 +111,9 @@ export function get_database_order(order: Order)
         complete: order.complete,
         type: order.type,
         rejected: order.rejected,
+        updated_at: order.updated_at,
         reject_reason: order.reject_reason,
-        data_string: JSON.stringify(order.data)
+        data_string: JSON.stringify(order.data),
     } as DatabaseOrder
 }
 
@@ -197,13 +215,13 @@ export async function update_article(article: Article) {
             database_id, // databaseId
             articles_id, // collectionId
             article.uuid, // documentId
-            article, // data (optional)
+            get_only_article_keys(article), // data (optional)
         );
     
         return result;
     }
     catch (e) {
-        send_error(`[DB Articles] Failed to update order: ${e}`)
+        send_error(`[DB Articles] Failed to update article: ${e}`)
         return {"error" : e};
     } 
 }
@@ -241,7 +259,7 @@ export async function create_article(article: Article) {
         database_id, // Database ID
         articles_id, // Collection ID
         article.uuid, // Document ID
-        article, // Data
+        get_only_article_keys(article), // Data
     )
 
     if (result.$id != null){

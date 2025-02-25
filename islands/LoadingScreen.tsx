@@ -3,8 +3,6 @@ import { createContext } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 export default function LoadingScreen({msg, is_loading}: {msg: string, is_loading: boolean}) {
-    console.log("Loading screen loaded...");
-
     const [show, set_show] = useState<boolean>(true);
     const [animate_out, set_animate_out] = useState<boolean>(false);
     const [animate_in, set_animate_in] = useState<boolean>(false);
@@ -14,7 +12,6 @@ export default function LoadingScreen({msg, is_loading}: {msg: string, is_loadin
         globalThis.addEventListener("beforeunload", () => {set_animate_in(true); set_animate_out(false); set_show(true);});
 
         if (!is_loading && !has_been_hidden) {
-            console.log("Hiding loading screen...");
             set_animate_out(true);
             set_has_been_hidden(true);
             setTimeout(() => set_show(false), 500);
