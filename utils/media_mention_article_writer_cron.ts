@@ -47,7 +47,10 @@ export function start_article_writer_cron()
 {
     console.log("Starting article writer cron...")
 
-    trigger_article_writer_cron();
+    const should_start_crons = Deno.env.get("START_CRONS_ON_DEV") === "true";
+    if (should_start_crons) {
+        trigger_article_writer_cron();
+    }
 
     Deno.cron("Media Mention Article Writer", "* */1 * * *", async () => {
         trigger_article_writer_cron();
