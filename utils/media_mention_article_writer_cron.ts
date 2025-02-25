@@ -11,7 +11,7 @@ import { write_article_for_order } from "./media_mention_article_writer.ts";
 
 export async function trigger_article_writer_cron()
 {
-    console.log("Running article writer cron...")
+    send_log("log", "Running article writer cron...")
     const next_orders = await get_orders_by_queries([
         sdk.Query.orderAsc("updated_at"), 
         sdk.Query.equal("complete", false), 
@@ -22,7 +22,7 @@ export async function trigger_article_writer_cron()
     ]);
 
     if (next_orders == null || !Array.isArray(next_orders)) {
-        console.log("No orders found.");
+        send_log("log", "No orders found.");
         return;
     }
     
@@ -45,7 +45,7 @@ export async function trigger_article_writer_cron()
 
 export function start_article_writer_cron()
 {
-    console.log("Starting article writer cron...")
+    send_log("log", "Starting article writer cron...")
 
     const should_start_crons = Deno.env.get("START_CRONS_ON_DEV") === "true";
     if (should_start_crons) {

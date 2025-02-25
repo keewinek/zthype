@@ -6,7 +6,7 @@ export default function SplashScreen() {
     const [loading, setLoading] = useState<boolean>(true);
     setTimeout(() => { setLoading(false); }, 200);
     useEffect(() => { 
-        setTimeout(() => { setLoading(false); }, 200);
+        setInterval(() => { setLoading(false); }, 200);
      }, []);
 
     return (
