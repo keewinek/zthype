@@ -1,3 +1,4 @@
+import { useEffect } from "preact/hooks";
 import Button from "../components/Button.tsx";
 import { get_saved_orders } from "../utils/saved_orders.ts";
 
@@ -14,6 +15,8 @@ export function TopNavLink({ href, text, fa_icon, toast }: { href: string; text:
 
 export default function TopNav() {
     const saved_orders = get_saved_orders();
+
+    useEffect(() => {}, []);
 
     return (
         <>

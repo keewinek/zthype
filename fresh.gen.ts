@@ -6,13 +6,17 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_admin_accept_order from "./routes/api/admin_accept_order.ts";
 import * as $api_admin_reject_order from "./routes/api/admin_reject_order.ts";
+import * as $api_get_article from "./routes/api/get_article.ts";
 import * as $api_get_order from "./routes/api/get_order.ts";
 import * as $api_get_orders from "./routes/api/get_orders.ts";
 import * as $api_order_media_mention from "./routes/api/order_media_mention.ts";
+import * as $blog_urlid_ from "./routes/blog/[urlid].tsx";
+import * as $blog_index from "./routes/blog/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
 import * as $orders_order_id_ from "./routes/orders/[order_id].tsx";
 import * as $orders_index from "./routes/orders/index.tsx";
+import * as $ArticlePage from "./islands/ArticlePage.tsx";
 import * as $LoadingScreen from "./islands/LoadingScreen.tsx";
 import * as $MediaMentionsMakeOrderPanel from "./islands/MediaMentionsMakeOrderPanel.tsx";
 import * as $MyOrdersPage from "./islands/MyOrdersPage.tsx";
@@ -27,15 +31,19 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/api/admin_accept_order.ts": $api_admin_accept_order,
     "./routes/api/admin_reject_order.ts": $api_admin_reject_order,
+    "./routes/api/get_article.ts": $api_get_article,
     "./routes/api/get_order.ts": $api_get_order,
     "./routes/api/get_orders.ts": $api_get_orders,
     "./routes/api/order_media_mention.ts": $api_order_media_mention,
+    "./routes/blog/[urlid].tsx": $blog_urlid_,
+    "./routes/blog/index.tsx": $blog_index,
     "./routes/index.tsx": $index,
     "./routes/media_mentions.tsx": $media_mentions,
     "./routes/orders/[order_id].tsx": $orders_order_id_,
     "./routes/orders/index.tsx": $orders_index,
   },
   islands: {
+    "./islands/ArticlePage.tsx": $ArticlePage,
     "./islands/LoadingScreen.tsx": $LoadingScreen,
     "./islands/MediaMentionsMakeOrderPanel.tsx": $MediaMentionsMakeOrderPanel,
     "./islands/MyOrdersPage.tsx": $MyOrdersPage,
