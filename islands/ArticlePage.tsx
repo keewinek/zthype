@@ -34,12 +34,14 @@ export default function ArticlePage({urlid}: {urlid: string}) {
         });
     }, []);
 
+    useEffect(() => {})
+
     return (
         <>
             <TopNav/>
             {
                 article_loaded &&
-                <div class="panel mb-6">
+                <div pragma-name="article" pragma-force="10" class="panel mb-6 pragma-once">
                     <h1 class="text-left my-2 text-4xl">{article.title}</h1>
                     <p class="text-sm text-gray mb-4">{(new Date(article.created_at)).toLocaleDateString()}</p>
                     <p>{article.paragraph}</p>
@@ -56,11 +58,11 @@ export default function ArticlePage({urlid}: {urlid: string}) {
             }
             {
                 !article_loaded &&
-                <div class="panel mb-6">
+                <div pragma-name="article" pragma-force="0" class="panel mb-6">
                     <h1 class="text-left my-2 text-4xl">{urlid_to_str(urlid)}</h1>
                     <p class="text-sm text-gray mb-4">Ładowanie artykułu...</p>
 
-                    {[...Array(50)].map(() => (
+                    {[...Array(30)].map(() => (
                         <div class="h-2 bg-gray rounded-full animate-pulse w-full mb-2.5"></div>
                     ))}
                 </div>

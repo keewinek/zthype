@@ -20,7 +20,7 @@ export default function TopNav() {
 
     return (
         <>
-            <div class="fixed top-0 left-0 flex justify-between items-center w-full px-4 py-2 bg-none border-background-light border-b-[1px] backdrop-blur-sm z-50">
+            <div pragma-name="topnav" class="fixed top-0 left-0 flex justify-between items-center w-full px-4 py-2 bg-none border-background-light border-b-[1px] backdrop-blur-sm z-50 pragma-once">
                 <div class="flex items-center">
                     <a href="/" class="text-xl font-semibold text-white mr-6 my-1k">
                         <img src="/src/brand/white_logo_text_color_transparent.png" class="h-11 mr-1 inline-block align-middle object-contain mt-[-5px]" />

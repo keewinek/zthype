@@ -1,5 +1,5 @@
 const to_replace = {
-    " ": "-",
+    " ": "_",
     "ä": "ae",
     "ö": "oe",
     "ü": "ue",
@@ -25,7 +25,7 @@ export function str_to_urlid(str: string): string {
         str = str.replaceAll(key, value);
     }
     str = str.replace(/[^a-zA-Z0-9-]/g, "");
-    str = str.replace(/-{2,}/g, "-");
+    str = str.replace(/_{2,}/g, "_");
 
     return str;
 }

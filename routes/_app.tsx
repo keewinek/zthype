@@ -15,6 +15,9 @@ export default function App({ Component }: PageProps) {
         <link rel="icon" href="/src/brand/white_logo_pink.png" sizes="any" />
         <link rel="stylesheet" href="/styles.css" />
 
+        <script src="/js/loading_screen_hider.js"/>
+        <script src="/js/pragma_once.js"/>
+
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
       </head>
       <body>
