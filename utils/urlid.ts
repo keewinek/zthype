@@ -35,5 +35,5 @@ export function capitalize(str: string): string {
 }
 
 export function urlid_to_str(urlid: string): string {
-    return capitalize(urlid.replace(/-/g, " "));
+    return capitalize(urlid.replace(/_/g, " "));
 }
