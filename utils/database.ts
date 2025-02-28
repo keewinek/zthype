@@ -92,9 +92,11 @@ export function get_only_article_keys(article: Article)
         source_id: article.source_id,
         url: article.url,
         order_ids: article.order_ids,
+        generated_paragraphs: article.generated_paragraphs,
         order_ids_count: article.order_ids_count,
         paragraph: article.paragraph,
         created_at: article.created_at,
+        img_urls: article.img_urls,
         uuid: article.uuid
     } as Article
 }

@@ -7,6 +7,8 @@ export interface Article {
     order_ids: number[],
     order_ids_count: number,
     paragraph: string,
+    generated_paragraphs: string[],
     created_at: number,
+    img_urls: string[],
     uuid: string
 }

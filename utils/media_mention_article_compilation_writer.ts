@@ -74,6 +74,8 @@ export async function create_new_compilation_article(order: Order, source: Media
         order_ids: [order.id],
         order_ids_count: 1,
         paragraph: "",
+        generated_paragraphs: [],
+        img_urls: [],
         created_at: Date.now(),
         updated_at: Date.now(),
         uuid: crypto.randomUUID(),

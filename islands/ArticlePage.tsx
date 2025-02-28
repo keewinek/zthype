@@ -43,7 +43,7 @@ export default function ArticlePage({urlid}: {urlid: string}) {
                 article_loaded &&
                 <div pragma-name="article" pragma-force="10" class="panel mb-6 pragma-once">
                     <h1 class="text-left my-2 text-4xl">{article.title}</h1>
-                    <p class="text-sm text-gray mb-4">{(new Date(article.created_at)).toLocaleDateString()}</p>
+                    <p class="text-sm text-gray mb-4">Opublikowano {(new Date(article.created_at)).toLocaleDateString()}</p>
                     <p>{article.paragraph}</p>
 
                     {paragraphs.map((paragraph: Paragraph) => { return (
@@ -54,6 +54,11 @@ export default function ArticlePage({urlid}: {urlid: string}) {
                                 {paragraph.project_zt_link && <a class="" href={paragraph.project_zt_link} target="_blank">Projekt na platformie ZwzT</a>}
                             </>
                     );})}
+
+                    <div class="flex my-4 text-gray text-xs">
+                        <p>Zdjęcia mogą pochodzić z <a href="https://www.pexels.com" target="_blank">pexels.com</a></p>.
+                    </div>
+
                 </div>
             }
             {

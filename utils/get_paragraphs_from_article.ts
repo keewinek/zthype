@@ -43,13 +43,30 @@ export default async function get_paragraphs_from_article(article: Article)
         }
 
         const media_mention_data = order.data as OrderMediaMentionData;
+        const paragraphs: Paragraph[] = [];
 
-        let paragraph = {
-            content: article.paragraph,
-            project_link: media_mention_data.project_link,
-            project_zt_link: media_mention_data.project_zt_link
-        } as Paragraph
+        for (let i = 0; i < article.generated_paragraphs.length; i++)
+        {
+            const generated_paragraph = JSON.parse(article.generated_paragraphs[i])
 
-        return [paragraph]
+            const paragraph = {
+                content: generated_paragraph.content,
+                header: generated_paragraph.header,
+            } as Paragraph
+
+            if (i == article.generated_paragraphs.length - 1)
+            {
+                paragraph.project_link = media_mention_data.project_link
+                paragraph.project_zt_link = media_mention_data.project_zt_link
+            }
+            if (i == 0)
+            {
+                paragraph.header = ""
+            }
+
+            paragraphs.push(paragraph)
+        }
+
+        return paragraphs
     }
 }
