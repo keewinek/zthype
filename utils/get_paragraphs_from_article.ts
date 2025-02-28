@@ -28,6 +28,10 @@ export default async function get_paragraphs_from_article(article: Article)
                 project_zt_link: media_mention_data.project_zt_link
             } as Paragraph
 
+            if (article.img_urls[i]) {
+                paragraph.img_url = article.img_urls[i]
+            }
+
             paragraphs.push(paragraph)
         }
 
@@ -54,14 +58,15 @@ export default async function get_paragraphs_from_article(article: Article)
                 header: generated_paragraph.header,
             } as Paragraph
 
-            if (i == article.generated_paragraphs.length - 1)
-            {
+            if (i == article.generated_paragraphs.length - 1) {
                 paragraph.project_link = media_mention_data.project_link
                 paragraph.project_zt_link = media_mention_data.project_zt_link
             }
-            if (i == 0)
-            {
+            if (i == 0) {
                 paragraph.header = ""
+            }
+            if (article.img_urls[i]) {
+                paragraph.img_url = article.img_urls[i]
             }
 
             paragraphs.push(paragraph)

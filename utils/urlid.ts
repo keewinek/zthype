@@ -25,6 +25,7 @@ export function str_to_urlid(str: string): string {
         str = str.replaceAll(key, value);
     }
     str = str.replace(/[^a-zA-Z0-9_]/g, "");
+    str = str.replace(/_{2,}/g, "_");
 
     return str;
 }

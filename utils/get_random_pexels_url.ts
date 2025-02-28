@@ -27,7 +27,7 @@ export async function get_random_pexels_urls(urls_count = 1)
     {
         connect_client()
         const random_photos = (await pexels_client.getRandomPhotos(urls_count)).photos;
-        const urls = random_photos.map((photo) => photo.url);
+        const urls = random_photos.map((photo) => photo.src.landscape);
         return urls;
     }
     catch(err) {
