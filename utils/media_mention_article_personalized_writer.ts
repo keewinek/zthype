@@ -56,7 +56,7 @@ export async function create_new_personalized_article(order: Order, source: Medi
         str_paragraphs.push(JSON.stringify(ai_content_data.paragraphs[i]))
     }
 
-    const imgs_count_to_add = Math.max(get_random_int(1, 6), str_paragraphs.length)
+    const imgs_count_to_add = Math.min(get_random_int(1, 6), str_paragraphs.length)
     const img_urls = await get_random_pexels_urls(imgs_count_to_add)
 
     const article = {
