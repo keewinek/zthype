@@ -24,7 +24,7 @@ export function str_to_urlid(str: string): string {
     for (const [key, value] of Object.entries(to_replace)) {
         str = str.replaceAll(key, value);
     }
-    str = str.replace(/[^a-zA-Z0-9-]/g, "");
+    str = str.replace(/[^a-zA-Z0-9_]/g, "");
 
     return str;
 }
