@@ -50,7 +50,7 @@ export default function ArticlePage({urlid}: {urlid: string}) {
                             <>
                                 {paragraph.header && <h2 class="my-4">{paragraph.header}</h2>}
                                 {paragraph.img_url && <img class="my-4 rounded-md w-full" src={paragraph.img_url} alt=""/>}
-                                <p>{paragraph.content}</p>
+                                <p class="text-justify">{paragraph.content}</p>
                                 {paragraph.project_link && <a class="mr-2" href={paragraph.project_link} target="_blank">Zobacz projekt </a>}
                                 {paragraph.project_zt_link && <a class="" href={paragraph.project_zt_link} target="_blank">Projekt na platformie ZwzT</a>}
                             </>

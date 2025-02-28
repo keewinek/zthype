@@ -168,7 +168,7 @@ export default function OrderPage({order_id} : {order_id: number}) {
                                     &nbsp;
                                     <ul class="list-decimal list-inside">
                                         {(order.data as OrderMediaMentionData).completed_urls.map((url: string) => (
-                                            <li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>
+                                            <li class="break-all"><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>
                                         ))}
                                     </ul>
                                 </p>
