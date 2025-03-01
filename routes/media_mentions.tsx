@@ -24,6 +24,7 @@ export default function Home() {
                     <h2 class="my-4 mt-12">Współpracujemy z tymi stronami:</h2>
                     <div class="flex justify-center">
                         <img src="/src/brand/zthype_blog_white_logo_text_color_transparent.png" class="h-16 mr-4 mb-4" />
+                        <img src="/src/bobrlog_logo.png" class="h-16 mr-4 mb-4" />
                     </div>
                 </div>
 

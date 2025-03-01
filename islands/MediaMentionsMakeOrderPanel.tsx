@@ -148,6 +148,14 @@ export function MediaMentionsMakeOrderPanel()
                         <input onClick={update_selected_sources} id="zt_hype_blog_personalized_article" type="checkbox"/>
                         <label for="zt_hype_blog_personalized_article">ZTHype blog - Napiszemy artykuł o waszym projekcie.<span><i class="fa-solid fa-check"></i></span></label>
                     </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="bobrlog_personalized_article" type="checkbox"/>
+                        <label for="bobrlog_personalized_article">BobrLog - Wspomnimy o waszym projekcie w artykule napisanym dla was.<span><i class="fa-solid fa-check"></i></span></label>
+                    </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="bobrlog_compilation" type="checkbox"/>
+                        <label for="bobrlog_compilation">BobrLog - Dodamy was do naszej kompilacji najlepszych projektów ZwzT.<span><i class="fa-solid fa-check"></i></span></label>
+                    </div>
                 </div>
 
                 { error != "" &&
