@@ -38,6 +38,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 		created_at: Date.now(),
 		complete: false,
 		moderated: false,
+		updated_at: Date.now(),
 		contact_email: contact_email,
 		type: "media_mention",
 		rejected: false,
