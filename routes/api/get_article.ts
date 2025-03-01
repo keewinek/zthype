@@ -11,20 +11,20 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
     const source_ids = url.searchParams.get("source_ids")?.split(",");
 
     if (!urlid || !source_ids) {
-        return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400 });
+        return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
     const out_data = await get_articles_by_queries([sdk.Query.equal("urlid", urlid), sdk.Query.equal("source_id", source_ids)]);
 
     if (!out_data || 'error' in out_data) {
-        return new Response(JSON.stringify({"error" : "Article not found " + out_data?.error}), { status: 400 });
+        return new Response(JSON.stringify({"error" : "Article not found " + out_data?.error}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
     if ('error' in out_data) {
-        return new Response(JSON.stringify({"error" : out_data.error}), { status: 400 });
+        return new Response(JSON.stringify({"error" : out_data.error}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
     const article = out_data[0] as Article;
     const paragraphs = await get_paragraphs_from_article(article);
 
-    return new Response(JSON.stringify({"success" : true, "article" : article, "paragraphs" : paragraphs}), { status: 200 });
+    return new Response(JSON.stringify({"success" : true, "article" : article, "paragraphs" : paragraphs}), { status: 200, headers: { "Access-Control-Allow-Origin": "*" } });
 };

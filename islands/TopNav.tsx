@@ -31,7 +31,7 @@ export default function TopNav() {
                     </span>
                 </div>
                 <div class="flex items-center ">
-                    <TopNavLink text="Twoje zamówienia" href="/orders" fa_icon="truck-fast" toast={saved_orders.length > 0 ? saved_orders.length.toString() : ""}/>
+                    <TopNavLink text="Zamówienia" href="/orders" fa_icon="truck-fast" toast={saved_orders.length > 0 ? saved_orders.length.toString() : ""}/>
                 </div>
             </div>
             <div class="h-16"></div>
