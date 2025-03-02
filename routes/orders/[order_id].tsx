@@ -1,6 +1,7 @@
 import { PageProps } from "$fresh/server.ts";
 import TopNav from "../../islands/TopNav.tsx";
 import OrderPage from "../../islands/OrderPage.tsx";
+import BottomFooter from "../../components/BottomFooter.tsx";
 
 export default function OrderPageWrapper(props: PageProps) {
     return (
@@ -11,6 +12,7 @@ export default function OrderPageWrapper(props: PageProps) {
             <body>
                 <TopNav/>
                 <OrderPage order_id={parseInt(props.params.order_id)}/>
+                <BottomFooter/>
             </body>
         </>
     );

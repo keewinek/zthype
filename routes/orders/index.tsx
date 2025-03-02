@@ -1,5 +1,6 @@
 import TopNav from "../../islands/TopNav.tsx";
 import MyOrdersPage from "../../islands/MyOrdersPage.tsx";
+import BottomFooter from "../../components/BottomFooter.tsx";
 
 export default function MyOrdersPageWrapper() {
     return (
@@ -10,6 +11,7 @@ export default function MyOrdersPageWrapper() {
             <body>
                 <TopNav/>
                 <MyOrdersPage/>
+                <BottomFooter/>
             </body>
         </>
     );

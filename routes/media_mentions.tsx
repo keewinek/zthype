@@ -3,6 +3,7 @@ import HomeServiceButton from "../components/HomeServiceButton.tsx";
 import TopNav from "../islands/TopNav.tsx";
 import { MediaMentionsMakeOrderPanel } from "../islands/MediaMentionsMakeOrderPanel.tsx";
 import SplashScreen from "../islands/SplashScreen.tsx";
+import BottomFooter from "../components/BottomFooter.tsx";
 
 export default function Home() {
     return (
@@ -30,6 +31,7 @@ export default function Home() {
                 </div>
 
                 <MediaMentionsMakeOrderPanel/>
+                <BottomFooter/>
             </body>
         </>
     );
