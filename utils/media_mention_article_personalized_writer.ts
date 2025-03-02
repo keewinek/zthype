@@ -56,8 +56,21 @@ export async function create_new_personalized_article(order: Order, source: Medi
         str_paragraphs.push(JSON.stringify(ai_content_data.paragraphs[i]))
     }
 
-    const imgs_count_to_add = Math.min(get_random_int(1, 6), str_paragraphs.length)
-    const img_urls = await get_random_pexels_urls(imgs_count_to_add)
+    const all_img_urls: string[] = await get_random_pexels_urls(ai_content_data.paragraphs.length) || [];
+    const img_urls: string[] = []
+
+    if (all_img_urls.length < ai_content_data.paragraphs.length) {
+        send_error(`Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${ai_content_data.paragraphs.length}!`);
+    }
+    else {
+        for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
+            if (get_random_int(0,100) < 75) {
+                img_urls.push(all_img_urls[i]);
+            } else {
+                img_urls.push("");
+            }
+        }
+    }
 
     const article = {
         type: "personalized",
