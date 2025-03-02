@@ -10,7 +10,7 @@ export default function App({ Component }: PageProps) {
         <meta http-equiv = "content-language" content = "pl"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>ZTHype</title>
+        <title>ZTHype - ZwzT made easy.</title>
 
         <link rel="icon" href="/src/brand/white_logo_pink.png" sizes="any" />
         <link rel="stylesheet" href="/styles.css" />
