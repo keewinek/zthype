@@ -194,6 +194,9 @@ export default function OrderPage({order_id} : {order_id: number}) {
                                 <Button text="Odrzuć zamówienie" onClick={admin_reject_order} fa_icon="ban" className="my-4" border full/>
                             </div>
                         )}
+
+                        <h2 class="my-2">Masz jakiś problem?</h2>
+                        <p class="text-justify mb-2">Jeśli masz jakiś problem z zamówieniem, napisz do mnie na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>.</p>
                     </>
                 )}
 
