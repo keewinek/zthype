@@ -24,6 +24,8 @@ export default function ArticlePage({urlid}: {urlid: string}) {
     const [article, set_article] = useState({} as Article);
     const [paragraphs, set_paragraphs] = useState([] as Paragraph[])
     const [article_loaded, set_article_loaded] = useState(false);
+
+    document.title = `${urlid_to_str(urlid)} - ZTHype`
     
     useEffect(() => {
         fetch_article(urlid).then((data) => {
