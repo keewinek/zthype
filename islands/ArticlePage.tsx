@@ -25,19 +25,25 @@ export default function ArticlePage({urlid}: {urlid: string}) {
     const [paragraphs, set_paragraphs] = useState([] as Paragraph[])
     const [article_loaded, set_article_loaded] = useState(false);
 
-    document.title = `${urlid_to_str(urlid)} - ZTHype`
-    
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.title = `${urlid_to_str(urlid)} - ZTHype`;
+        }
+    }, [urlid]);
+
     useEffect(() => {
         fetch_article(urlid).then((data) => {
             set_article(data.article);
             set_paragraphs(data.paragraphs);
             set_article_loaded(true);
-            document.title = `${data.article.title} - ZTHype`;
+            if (typeof document !== 'undefined') {
+                document.title = `${data.article.title} - ZTHype`;
+            }
             console.log(data);
         });
-    }, []);
+    }, [urlid]);
 
-    useEffect(() => {})
+    useEffect(() => {}, [])
 
     return (
         <>
