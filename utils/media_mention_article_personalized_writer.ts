@@ -65,7 +65,7 @@ export async function create_new_personalized_article(order: Order, source: Medi
     }
     else {
         for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
-            if (get_random_int(0,100) < 75) {
+            if (get_random_int(0,100) < 50) {
                 img_urls.push(all_img_urls[i]);
             } else {
                 img_urls.push("");
