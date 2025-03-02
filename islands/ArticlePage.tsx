@@ -30,6 +30,7 @@ export default function ArticlePage({urlid}: {urlid: string}) {
             set_article(data.article);
             set_paragraphs(data.paragraphs);
             set_article_loaded(true);
+            document.title = `${data.article.title} - ZTHype`;
             console.log(data);
         });
     }, []);
