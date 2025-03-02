@@ -8,6 +8,7 @@ import { MediaMentionSourceConfig } from "../interfaces/MediaMentionSourceConfig
 import { Article } from "../interfaces/Article.ts";
 import { ctf } from "./formatting_compiler.ts";
 import { write_article_for_order } from "./media_mention_article_writer.ts";
+import { send_order_completion_message } from "./special_discord_webhook_sender.ts";
 
 export async function trigger_article_writer_cron()
 {
@@ -31,7 +32,7 @@ export async function trigger_article_writer_cron()
     if ((next_order.data as OrderMediaMentionData).completed_sources.length == (next_order.data as OrderMediaMentionData).selected_sources.length) {
         next_order.complete = true;
         await update_order(next_order);
-        send_log("orders",`✅ Order #${next_order.id} Media Mention completed.`)
+        send_order_completion_message(next_order);
         return;
     }
 
