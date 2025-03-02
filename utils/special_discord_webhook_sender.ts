@@ -14,7 +14,7 @@ export function send_order_completion_message(order: Order)
 
 export function send_article_creation_message(article: Article)
 {
-    let message = `## ✅ Artykuł "${article.type}" został utworzony/zakualizowany \n`
+    let message = `## ✅ Artykuł "${article.title}" został utworzony/zakualizowany \n`
     message += `### [Link do artykułu](${article.url}) \n`
     message += `### Źródło: ${article.source_id} \n`
     message += `### Zamówienia: #${article.order_ids.join(", #")}`
