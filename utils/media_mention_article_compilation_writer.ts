@@ -7,6 +7,7 @@ import { send_error, send_log } from "./discord_webhook_sender.ts";
 import * as sdk from "https://deno.land/x/appwrite/mod.ts";
 import { ctf } from "./formatting_compiler.ts";
 import { Article } from "../interfaces/Article.ts";
+import { send_article_creation_message } from "./special_discord_webhook_sender.ts";
 
 export async function add_order_to_compilation_article(order: Order, source: MediaMentionSourceConfig)
 {
@@ -87,7 +88,7 @@ export async function create_new_compilation_article(order: Order, source: Media
         return out;
     }
 
-    send_log("articles", `Article ${target_article.url} created with order #${order.id}.`)
+    send_article_creation_message(target_article);
 
     return target_article;
 }

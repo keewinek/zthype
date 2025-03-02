@@ -2,6 +2,7 @@ import { FreshContext } from "$fresh/server.ts";
 import OrderMediaMentionData from "../../interfaces/MediaMentionData.ts";
 import Order from "../../interfaces/Order.ts";
 import { create_order, get_next_order_id } from "../../utils/database.ts";
+import { send_order_placed_message } from "../../utils/special_discord_webhook_sender.ts";
 
 export const handler = async (_req: Request, _ctx: FreshContext): Promise<Response> => {
 	const url = new URL(_req.url);
@@ -55,6 +56,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 	};
 
 	create_order(order);
+	send_order_placed_message(order);
 
 	return new Response(JSON.stringify({"success" : true, "order" : order}), { status: 200 });
 };

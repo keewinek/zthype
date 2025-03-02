@@ -8,6 +8,7 @@ import { ctf } from "./formatting_compiler.ts";
 import { get_random_pexels_urls } from "./get_random_pexels_url.ts";
 import get_gpt_content from "./gpt_prompter.ts";
 import { get_random_int } from "./random.ts";
+import { send_article_creation_message } from "./special_discord_webhook_sender.ts";
 import { str_to_urlid } from "./urlid.ts";
 
 export async function create_new_personalized_article(order: Order, source: MediaMentionSourceConfig)
@@ -90,7 +91,7 @@ export async function create_new_personalized_article(order: Order, source: Medi
     } as Article
     
     create_article(article);
-    send_log("articles", `Created new personalized article for media mention order #${order.id}!`);
+    send_article_creation_message(article);
 
     return article;
 }
