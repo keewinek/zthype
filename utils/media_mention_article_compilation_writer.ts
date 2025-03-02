@@ -53,7 +53,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
         return {"error": out.error}
     }
 
-    send_log("articles", `Article ${target_article.url} updated with new added order #${order.id}.`)
+    send_article_creation_message(target_article as Article);
 
     return target_article;
 }
