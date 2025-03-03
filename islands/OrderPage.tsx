@@ -15,12 +15,12 @@ export function OrderStatusBadge({order, className} : {order: Order, className?:
             }
             {order.moderated && !order.complete && !order.rejected &&
                 <span class={`text-gray bg-background-light rounded-md p-1 px-2 ml-2 text-sm align-middle h-fit ${className}`}>
-                    <i class="fa-solid fa-clock mr-2"></i> W trakcie realizacji
+                    <i class="fa-solid fa-clock mr-2"></i> W trakcie realizacji - Wróć jutro
                 </span>
             }
             {!order.moderated  && !order.rejected && 
                 <span class={`text-gray bg-background-light rounded-md p-1 px-2 ml-2 text-sm align-middle h-fit ${className}`}>
-                    <i class="fa-solid fa-clock mr-2"></i> Czeka na sprawdzenie
+                    <i class="fa-solid fa-clock mr-2"></i> Czeka na sprawdzenie - Wróć jutro
                 </span>
             }
             {order.rejected &&
