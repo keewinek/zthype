@@ -156,6 +156,14 @@ export function MediaMentionsMakeOrderPanel()
                         <input onClick={update_selected_sources} id="bobrlog_compilation" type="checkbox"/>
                         <label for="bobrlog_compilation"><span><i class="fa-solid fa-check"></i></span>BobrLog - Dodamy was do naszej kompilacji najlepszych projektów ZwzT.</label>
                     </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="literno_personalized_article" type="checkbox"/>
+                        <label for="literno_personalized_article"><span><i class="fa-solid fa-check"></i></span>Literno - Wspomnimy o was na naszym blogu.</label>
+                    </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="literno_compilation" type="checkbox"/>
+                        <label for="literno_compilation"><span><i class="fa-solid fa-check"></i></span>Literno - Dodamy was do naszego przedstawienia kilku projektów ZwzT.</label>
+                    </div>
                 </div>
 
                 { error != "" &&

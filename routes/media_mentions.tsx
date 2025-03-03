@@ -26,6 +26,7 @@ export default function Home() {
                     <div class="flex flex-wrap justify-center max-w-full">
                         <img src="/src/brand/zthype_blog_white_logo_text_color_transparent.png" class="h-16 mr-4 mb-4 max-md:h-10" />
                         <img src="/src/bobrlog_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
+                        <img src="/src/literno_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
                     </div>
                     <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>.</p>
                 </div>
