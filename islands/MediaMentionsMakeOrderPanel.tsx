@@ -148,6 +148,7 @@ export function MediaMentionsMakeOrderPanel()
                         <input onClick={update_selected_sources} id="zt_hype_blog_personalized_article" type="checkbox"/>
                         <label for="zt_hype_blog_personalized_article"><span><i class="fa-solid fa-check"></i></span>ZTHype blog - Napiszemy artykuł o waszym projekcie.</label>
                     </div>
+
                     <div class="checkbox-box source" style="text-align: left;">
                         <input onClick={update_selected_sources} id="bobrlog_personalized_article" type="checkbox"/>
                         <label for="bobrlog_personalized_article"><span><i class="fa-solid fa-check"></i></span>BobrLog - Wspomnimy o waszym projekcie w artykule napisanym dla was.</label>
@@ -156,6 +157,7 @@ export function MediaMentionsMakeOrderPanel()
                         <input onClick={update_selected_sources} id="bobrlog_compilation" type="checkbox"/>
                         <label for="bobrlog_compilation"><span><i class="fa-solid fa-check"></i></span>BobrLog - Dodamy was do naszej kompilacji najlepszych projektów ZwzT.</label>
                     </div>
+
                     <div class="checkbox-box source" style="text-align: left;">
                         <input onClick={update_selected_sources} id="literno_personalized_article" type="checkbox"/>
                         <label for="literno_personalized_article"><span><i class="fa-solid fa-check"></i></span>Literno - Wspomnimy o was na naszym blogu.</label>
@@ -163,6 +165,33 @@ export function MediaMentionsMakeOrderPanel()
                     <div class="checkbox-box source" style="text-align: left;">
                         <input onClick={update_selected_sources} id="literno_compilation" type="checkbox"/>
                         <label for="literno_compilation"><span><i class="fa-solid fa-check"></i></span>Literno - Dodamy was do naszego przedstawienia kilku projektów ZwzT.</label>
+                    </div>
+
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="actopira_personalized_article" type="checkbox"/>
+                        <label for="actopira_personalized_article"><span><i class="fa-solid fa-check"></i></span>Actopira - Będzie wpis o was na naszej stronie www</label>
+                    </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="actopira_compilation" type="checkbox"/>
+                        <label for="actopira_compilation"><span><i class="fa-solid fa-check"></i></span>Actopira - Umieścimy wasz projekt na liście projektów na naszej stronie</label>
+                    </div>
+
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="qulia_personalized_article" type="checkbox"/>
+                        <label for="qulia_personalized_article"><span><i class="fa-solid fa-check"></i></span>Qulia - Wyreadagujemy artykuł specjalnie dla was.</label>
+                    </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="qulia_compilation" type="checkbox"/>
+                        <label for="qulia_compilation"><span><i class="fa-solid fa-check"></i></span>Qulia - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych.</label>
+                    </div>
+                    
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="socjovibe_personalized_article" type="checkbox"/>
+                        <label for="socjovibe_personalized_article"><span><i class="fa-solid fa-check"></i></span>Socjovibe - Napiszemy o was wpis.</label>
+                    </div>
+                    <div class="checkbox-box source" style="text-align: left;">
+                        <input onClick={update_selected_sources} id="socjovibe_compilation" type="checkbox"/>
+                        <label for="socjovibe_compilation"><span><i class="fa-solid fa-check"></i></span>Socjovibe - Dodamy was do najnowszej kompilacji projektów.</label>
                     </div>
                 </div>
 

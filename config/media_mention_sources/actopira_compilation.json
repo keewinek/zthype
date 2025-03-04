@@ -1,0 +1,8 @@
+{
+    "type": "compilation",
+    "title": "Lista projektów społecznych nr. %index%",
+    "id": "actopira_compilation",
+    "urlid" : "lista_projektow_spolecznych_%index%",
+    "url": "https://actopira.wuaze.com/blog/lista_projektow_spolecznych_%index%",
+    "max_orders": 20
+}
