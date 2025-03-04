@@ -17,8 +17,8 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 
     if (urlid == "test") {
         // load paragraphs from config/test_paragraphs.json
-        const paragraphs = JSON.parse(await Deno.readTextFile("config/test_paragraphs.json")) as Paragraph[]
-        return new Response(JSON.stringify({"success" : true, "paragraphs" : paragraphs}), { status: 200, headers: { "Access-Control-Allow-Origin": "*" } });
+        const json = await Deno.readTextFile("config/test_article_response.json")
+        return new Response(json, { status: 200, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
     const out_data = await get_articles_by_queries([sdk.Query.equal("urlid", urlid), sdk.Query.equal("source_id", source_ids)]);
