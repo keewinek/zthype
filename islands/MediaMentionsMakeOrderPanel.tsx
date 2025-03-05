@@ -12,9 +12,9 @@ function get_source_count_string(count: number)
 function MediaMentionSourcePick({source_id, title, upd} : {source_id: string, title: string, upd: () => void})
 {
     return (
-        <div class="source">
-            <input type="checkbox" id={source_id} onChange={upd} />
-            <label for={source_id}>{title}</label>
+        <div class="checkbox-box source" style="text-align: left;">
+            <input onClick={upd} id={source_id} type="checkbox"/>
+            <label for={source_id}><span><i class="fa-solid fa-check"></i></span>{title}</label>
         </div>
     );
 }
