@@ -1,0 +1,8 @@
+{
+    "type": "compilation",
+    "title": "Wybrane projekty społczene #%index%",
+    "id": "evenciarze_compilation",
+    "urlid" : "wybrane_projekty_spoleczne_%index%",
+    "url": "https://evenciarze.infy.uk/blog/wybrane_projekty_spoleczne_%index%",
+    "max_orders": 14
+}

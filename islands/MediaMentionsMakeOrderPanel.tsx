@@ -9,13 +9,23 @@ function get_source_count_string(count: number)
     return `${count} źródeł`;
 }
 
+function MediaMentionSourcePick({source_id, title, upd} : {source_id: string, title: string, upd: () => void})
+{
+    return (
+        <div class="source">
+            <input type="checkbox" id={source_id} onChange={upd} />
+            <label for={source_id}>{title}</label>
+        </div>
+    );
+}
+
 export function MediaMentionsMakeOrderPanel()
 {
     const [selected_sources, set_selected_sources] = useState<string[]>([]);
     const [error, set_error] = useState<string>("");
     const [loading, set_loading] = useState<boolean>(false);
     
-    function update_selected_sources()
+    function update_sel_sources()
     {
         console.log("update_selected_sources");
         const sources: string[] = [];
@@ -140,59 +150,20 @@ export function MediaMentionsMakeOrderPanel()
                 <h2 class="mt-4 mb-2">Jak chcecie, by o was <span class="text-pink">wspomniano</span>?</h2>
                 <p class="text-gray text-justify">Wybierzcie źródła wzmianek medialnych.</p>
                 <div class="form-group mt-6">
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="zt_hype_blog_projects_review" type="checkbox"/>
-                        <label for="zt_hype_blog_projects_review"><span><i class="fa-solid fa-check"></i></span>ZTHype blog - Przegląd projektów społecznych zwolnionych.</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="zt_hype_blog_personalized_article" type="checkbox"/>
-                        <label for="zt_hype_blog_personalized_article"><span><i class="fa-solid fa-check"></i></span>ZTHype blog - Napiszemy artykuł o waszym projekcie.</label>
-                    </div>
-
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="bobrlog_personalized_article" type="checkbox"/>
-                        <label for="bobrlog_personalized_article"><span><i class="fa-solid fa-check"></i></span>BobrLog - Wspomnimy o waszym projekcie w artykule napisanym dla was.</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="bobrlog_compilation" type="checkbox"/>
-                        <label for="bobrlog_compilation"><span><i class="fa-solid fa-check"></i></span>BobrLog - Dodamy was do naszej kompilacji najlepszych projektów ZwzT.</label>
-                    </div>
-
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="literno_personalized_article" type="checkbox"/>
-                        <label for="literno_personalized_article"><span><i class="fa-solid fa-check"></i></span>Literno - Wspomnimy o was na naszym blogu.</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="literno_compilation" type="checkbox"/>
-                        <label for="literno_compilation"><span><i class="fa-solid fa-check"></i></span>Literno - Dodamy was do naszego przedstawienia kilku projektów ZwzT.</label>
-                    </div>
-
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="actopira_personalized_article" type="checkbox"/>
-                        <label for="actopira_personalized_article"><span><i class="fa-solid fa-check"></i></span>Actopira - Będzie wpis o was na naszej stronie www</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="actopira_compilation" type="checkbox"/>
-                        <label for="actopira_compilation"><span><i class="fa-solid fa-check"></i></span>Actopira - Umieścimy wasz projekt na liście projektów na naszej stronie</label>
-                    </div>
-
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="quila_personalized_article" type="checkbox"/>
-                        <label for="quila_personalized_article"><span><i class="fa-solid fa-check"></i></span>quila - Wyreadagujemy artykuł specjalnie dla was.</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="quila_compilation" type="checkbox"/>
-                        <label for="quila_compilation"><span><i class="fa-solid fa-check"></i></span>quila - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych.</label>
-                    </div>
-                    
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="socjovibe_personalized_article" type="checkbox"/>
-                        <label for="socjovibe_personalized_article"><span><i class="fa-solid fa-check"></i></span>Socjovibe - Napiszemy o was wpis.</label>
-                    </div>
-                    <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="socjovibe_compilation" type="checkbox"/>
-                        <label for="socjovibe_compilation"><span><i class="fa-solid fa-check"></i></span>Socjovibe - Dodamy was do najnowszej kompilacji projektów.</label>
-                    </div>
+                    <MediaMentionSourcePick source_id="zt_hype_blog_projects_review" title="ZTHype blog - Przegląd projektów społecznych zwolnionych." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="zt_hype_blog_personalized_article" title="ZTHype blog - Napiszemy artykuł o waszym projekcie." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="bobrlog_personalized_article" title="BobrLog - Wspomnimy o waszym projekcie w artykule napisanym dla was." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="bobrlog_compilation" title="BobrLog - Dodamy was do naszej kompilacji najlepszych projektów ZwzT." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="literno_personalized_article" title="Literno - Wspomnimy o was na naszym blogu." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="literno_compilation" title="Literno - Dodamy was do naszego przedstawienia kilku projektów ZwzT." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="actopira_personalized_article" title="Actopira - Będzie wpis o was na naszej stronie www" upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="actopira_compilation" title="Actopira - Umieścimy wasz projekt na liście projektów na naszej stronie" upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="quila_personalized_article" title="Quila - Wyreadagujemy artykuł specjalnie dla was." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="quila_compilation" title="Quila - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="socjovibe_personalized_article" title="Socjovibe - Napiszemy o was wpis." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="socjovibe_compilation" title="Socjovibe - Dodamy was do najnowszej kompilacji projektów." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="evenciarze_personalized_article" title="Evenciarze - Opublikujemy na naszej stronie internetowej wpis o was." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="evenciarze_compilation" title="Evenciarze - Napiszemy o was w naszych wybranych projektach spolecznych." upd={update_sel_sources} />
                 </div>
 
                 { error != "" &&
