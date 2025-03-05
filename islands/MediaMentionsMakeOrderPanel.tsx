@@ -177,12 +177,12 @@ export function MediaMentionsMakeOrderPanel()
                     </div>
 
                     <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="qulia_personalized_article" type="checkbox"/>
-                        <label for="qulia_personalized_article"><span><i class="fa-solid fa-check"></i></span>Qulia - Wyreadagujemy artykuł specjalnie dla was.</label>
+                        <input onClick={update_selected_sources} id="quila_personalized_article" type="checkbox"/>
+                        <label for="quila_personalized_article"><span><i class="fa-solid fa-check"></i></span>quila - Wyreadagujemy artykuł specjalnie dla was.</label>
                     </div>
                     <div class="checkbox-box source" style="text-align: left;">
-                        <input onClick={update_selected_sources} id="qulia_compilation" type="checkbox"/>
-                        <label for="qulia_compilation"><span><i class="fa-solid fa-check"></i></span>Qulia - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych.</label>
+                        <input onClick={update_selected_sources} id="quila_compilation" type="checkbox"/>
+                        <label for="quila_compilation"><span><i class="fa-solid fa-check"></i></span>quila - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych.</label>
                     </div>
                     
                     <div class="checkbox-box source" style="text-align: left;">
