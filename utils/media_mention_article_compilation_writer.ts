@@ -42,6 +42,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
 
     const target_article = database_out_articles[0];
     target_article.order_ids.push(order.id);
+    target_article.order_ids.sort(() => Math.random() - 0.5);
     target_article.order_ids_count += 1;
 
     console.log(JSON.stringify(target_article));
