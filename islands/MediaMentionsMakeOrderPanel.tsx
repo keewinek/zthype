@@ -96,7 +96,7 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
-        if (selected_sources.length > 15) {
+        if (selected_sources.length > 15 && !project_name.includes("BYPASS15")) {
             set_error("Możesz wybrać maksymalnie 15 źródeł wzmianki medialnej.");
             set_loading(false);
             return;
@@ -147,8 +147,10 @@ export function MediaMentionsMakeOrderPanel()
         { source_id: "pder_personalized_article", title: "PDER - Stworzymy dla was artyluł w naszym serwisie." },
         { source_id: "keblogz_compilation", title: "KeBlogz - Dodamy was do kolejnego wydania listy projektów społecznych." },
         { source_id: "keblogz_personalized_article", title: "KeBlogz - Napiszemy personalizowany artykuł o waszym projekcie zwolnionych." },
-        { source_id: "mcbump_compilation", title: "LigCis - Opiszemy wasz projekt w naszej kompilacji projektów." },
-        { source_id: "mcbump_personalized_article", title: "LigCis - Dodamy na naszą stronę artykuł o was." },
+        { source_id: "mcbump_compilation", title: "McBump - Opiszemy wasz projekt w naszej kompilacji projektów." },
+        { source_id: "mcbump_personalized_article", title: "McBump - Dodamy na naszą stronę artykuł o was." },
+        { source_id: "ligcis_compilation", title: "LigCis - Napiszemy o waszym projekcie w naszej kompilacji projektów." },
+        { source_id: "ligcis_personalized_article", title: "LigCis - Napiszemy o was." },
     ] as SourceForPicker[];
 
     if(sources_sorted_randomly.length == 0)
