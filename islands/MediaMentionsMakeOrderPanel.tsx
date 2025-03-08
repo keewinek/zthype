@@ -136,7 +136,9 @@ export function MediaMentionsMakeOrderPanel()
         { source_id: "socjovibe_personalized_article", title: "Socjovibe - Napiszemy o was wpis." },
         { source_id: "socjovibe_compilation", title: "Socjovibe - Dodamy was do najnowszej kompilacji projektów." },
         { source_id: "evenciarze_personalized_article", title: "Evenciarze - Opublikujemy na naszej stronie internetowej wpis o was." },
-        { source_id: "evenciarze_compilation", title: "Evenciarze - Napiszemy o was w naszych wybranych projektach spolecznych." }
+        { source_id: "evenciarze_compilation", title: "Evenciarze - Napiszemy o was w naszych wybranych projektach spolecznych." },
+        { source_id: "pder_compilation", title: "PDER - Wspomnimy o waszym projekcie, w kolejnym wydaniu fajnych projektów społecznych." },
+        { source_id: "pder_personalized_article", title: "PDER - Stworzymy dla was artyluł w naszym serwisie." },
     ] as SourceForPicker[];
 
     if(sources_sorted_randomly.length == 0)

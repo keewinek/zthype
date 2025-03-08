@@ -32,6 +32,7 @@ export default function Home() {
                         <img src="/src/ligcis_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
                         <img src="/src/qulia_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
                         <img src="/src/socjovibe_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
+                        <img src="/src/pder_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
                     </div>
                     <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>.</p>
                 </div>
