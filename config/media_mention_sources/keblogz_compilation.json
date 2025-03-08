@@ -1,0 +1,8 @@
+{
+    "type": "compilation",
+    "title": "#%index% lista projektów społęcznych",
+    "id": "keblogz_compilation",
+    "urlid" : "%index%_lista_projektow_spolecznych",
+    "url": "https://keblogz.netlify.app/blog?a=%index%_lista_projektow_spolecznych",
+    "max_orders": 9
+}
