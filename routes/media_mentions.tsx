@@ -35,8 +35,9 @@ export default function Home() {
                         <MediaMentionPartnerImg src="/src/ligcis_logo.png" />
                         <MediaMentionPartnerImg src="/src/qulia_logo.png" />
                         <MediaMentionPartnerImg src="/src/socjovibe_logo.png" />
+                        <MediaMentionPartnerImg src="/src/mcbump_logo.png" />
                     </div>
-                    <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>. Współpraca z ZTHype to więcej ruchu na twojej stronie.</p>
+                    <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>. Współpraca z ZTHype to większy ruch na twojej stronie.</p>
                 </div>
 
                 <MediaMentionsMakeOrderPanel/>

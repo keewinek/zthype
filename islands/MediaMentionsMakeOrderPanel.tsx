@@ -147,6 +147,8 @@ export function MediaMentionsMakeOrderPanel()
         { source_id: "pder_personalized_article", title: "PDER - Stworzymy dla was artyluł w naszym serwisie." },
         { source_id: "keblogz_compilation", title: "KeBlogz - Dodamy was do kolejnego wydania listy projektów społecznych." },
         { source_id: "keblogz_personalized_article", title: "KeBlogz - Napiszemy personalizowany artykuł o waszym projekcie zwolnionych." },
+        { source_id: "mcbump_compilation", title: "LigCis - Opiszemy wasz projekt w naszej kompilacji projektów." },
+        { source_id: "mcbump_personalized_article", title: "LigCis - Dodamy na naszą stronę artykuł o was." },
     ] as SourceForPicker[];
 
     if(sources_sorted_randomly.length == 0)
