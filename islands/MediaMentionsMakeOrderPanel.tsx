@@ -96,6 +96,12 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
+        if (selected_sources.length > 15) {
+            set_error("Możesz wybrać maksymalnie 15 źródeł wzmianki medialnej.");
+            set_loading(false);
+            return;
+        }
+
         project_name = encodeURIComponent(project_name);
         project_desc = encodeURIComponent(project_desc);
         project_link = encodeURIComponent(project_link);

@@ -4,6 +4,7 @@ import TopNav from "../islands/TopNav.tsx";
 import { MediaMentionsMakeOrderPanel } from "../islands/MediaMentionsMakeOrderPanel.tsx";
 import SplashScreen from "../islands/SplashScreen.tsx";
 import BottomFooter from "../components/BottomFooter.tsx";
+import MediaMentionPartnerImg from "../components/MediaMentionPartnerImg.tsx";
 
 export default function Home() {
     return (
@@ -24,18 +25,18 @@ export default function Home() {
 
                     <h2 class="my-4 mt-12">Współpracujemy z tymi stronami:</h2>
                     <div class="flex flex-wrap justify-center max-w-full">
-                        <img src="/src/brand/zthype_blog_white_logo_text_color_transparent.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/bobrlog_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/literno_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/actropira_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/evenciarze_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/ligcis_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/qulia_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/socjovibe_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/pder_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
-                        <img src="/src/keblogz_logo.png" class="h-16 mr-4 mb-4 max-md:h-10" />
+                        <MediaMentionPartnerImg src="/src/brand/zthype_blog_white_logo_text_color_transparent.png" />
+                        <MediaMentionPartnerImg src="/src/bobrlog_logo.png" />
+                        <MediaMentionPartnerImg src="/src/literno_logo.png" />
+                        <MediaMentionPartnerImg src="/src/pder_logo.png" />
+                        <MediaMentionPartnerImg src="/src/keblogz_logo.png" />
+                        <MediaMentionPartnerImg src="/src/actropira_logo.png" />
+                        <MediaMentionPartnerImg src="/src/evenciarze_logo.png" />
+                        <MediaMentionPartnerImg src="/src/ligcis_logo.png" />
+                        <MediaMentionPartnerImg src="/src/qulia_logo.png" />
+                        <MediaMentionPartnerImg src="/src/socjovibe_logo.png" />
                     </div>
-                    <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>.</p>
+                    <p class="text-gray text-xs mt-2">Chcesz współpracować z nami? Napisz na <a href="mailto:keewinek@gmail.com">keewinek@gmail.com</a>. Współpraca z ZTHype to więcej ruchu na twojej stronie.</p>
                 </div>
 
                 <MediaMentionsMakeOrderPanel/>
