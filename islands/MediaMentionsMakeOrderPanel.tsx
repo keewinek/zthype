@@ -158,8 +158,8 @@ export function MediaMentionsMakeOrderPanel()
                     <MediaMentionSourcePick source_id="literno_compilation" title="Literno - Dodamy was do naszego przedstawienia kilku projektów ZwzT." upd={update_sel_sources} />
                     <MediaMentionSourcePick source_id="actopira_personalized_article" title="Actopira - Będzie wpis o was na naszej stronie www" upd={update_sel_sources} />
                     <MediaMentionSourcePick source_id="actopira_compilation" title="Actopira - Umieścimy wasz projekt na liście projektów na naszej stronie" upd={update_sel_sources} />
-                    <MediaMentionSourcePick source_id="quila_personalized_article" title="Quila - Wyreadagujemy artykuł specjalnie dla was." upd={update_sel_sources} />
-                    <MediaMentionSourcePick source_id="quila_compilation" title="Quila - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="qulia_personalized_article" title="Qulia - Wyreadagujemy artykuł specjalnie dla was." upd={update_sel_sources} />
+                    <MediaMentionSourcePick source_id="qulia_compilation" title="Qulia - Wspomnimy o was przy okazji tworzenia listy projektów ze zwolnionych." upd={update_sel_sources} />
                     <MediaMentionSourcePick source_id="socjovibe_personalized_article" title="Socjovibe - Napiszemy o was wpis." upd={update_sel_sources} />
                     <MediaMentionSourcePick source_id="socjovibe_compilation" title="Socjovibe - Dodamy was do najnowszej kompilacji projektów." upd={update_sel_sources} />
                     <MediaMentionSourcePick source_id="evenciarze_personalized_article" title="Evenciarze - Opublikujemy na naszej stronie internetowej wpis o was." upd={update_sel_sources} />
