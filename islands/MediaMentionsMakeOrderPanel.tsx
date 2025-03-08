@@ -18,7 +18,7 @@ function get_source_count_string(count: number)
 function MediaMentionSourcePick({source_id, title, upd} : {source_id: string, title: string, upd: () => void})
 {
     return (
-        <div class="checkbox-box source" style="text-align: left;">
+        <div class="checkbox-box source block" style="text-align: left;">
             <input onClick={upd} id={source_id} type="checkbox"/>
             <label for={source_id}><span><i class="fa-solid fa-check"></i></span>{title}</label>
         </div>
@@ -193,7 +193,7 @@ export function MediaMentionsMakeOrderPanel()
             <div class="panel mt-12">
                 <h2 class="mt-4 mb-2">Jak chcecie, by o was <span class="text-pink">wspomniano</span>?</h2>
                 <p class="text-gray text-justify">Wybierzcie źródła wzmianek medialnych.</p>
-                <div class="form-group mt-6">
+                <div class="mt-6">
                     {sources_sorted_randomly.map(source => (
                         <MediaMentionSourcePick key={source.source_id} source_id={source.source_id} title={source.title} upd={update_sel_sources} />
                     ))}
