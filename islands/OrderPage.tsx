@@ -4,6 +4,7 @@ import { useSignal } from "https://esm.sh/v135/@preact/signals@1.2.2/X-ZS8q/dist
 import Order from "../interfaces/Order.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import Button from "../components/Button.tsx";
+import Banner320x50 from "../components/Banner320x50.tsx";
 
 export function OrderStatusBadge({order, className} : {order: Order, className?: string}) {
     return (
@@ -139,6 +140,7 @@ export default function OrderPage({order_id} : {order_id: number}) {
             <LoadingScreen msg={`Ładowanie zamówienia #${order_id}...`} is_loading={loading} />
             <div class="panel">
                 <h1 class="my-2">Zamówienie <span class="text-gray">#{order_id}</span></h1>
+                <Banner320x50/>
                 
                 {error && <p class="text-red-200 bg-red-950 w-full rounded-md p-4 my-4"><i class="fa-solid fa-circle-exclamation mr-2"></i> Wystąpił błąd podczas ładowania zamówienia: {error}</p>}
             

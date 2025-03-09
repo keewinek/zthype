@@ -18,6 +18,14 @@ export default function App({ Component }: PageProps) {
         <script src="/js/loading_screen_hider.js"/>
         <script src="/js/pragma_once.js"/>
 
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6RFET6H64Z"></script>
+        <script dangerouslySetInnerHTML={{__html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-6RFET6H64Z');`}}>
+        </script>
+
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
       </head>
       <body>
