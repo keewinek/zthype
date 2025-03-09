@@ -12,36 +12,41 @@ import { send_order_completion_message } from "./special_discord_webhook_sender.
 
 export async function trigger_article_writer_cron()
 {
-    send_log("log", "Running article writer cron...")
-    const next_orders = await get_orders_by_queries([
-        sdk.Query.orderAsc("updated_at"), 
-        sdk.Query.equal("complete", false), 
-        sdk.Query.equal("type", "media_mention"), 
-        sdk.Query.equal("moderated", true), 
-        sdk.Query.equal("rejected", false),
-        sdk.Query.limit(1)
-    ]);
-
-    if (next_orders == null || !Array.isArray(next_orders)) {
-        send_log("log", "No orders found.");
-        return;
-    }
+    try {
+        send_log("log", "Running article writer cron...")
+        const next_orders = await get_orders_by_queries([
+            sdk.Query.orderAsc("updated_at"), 
+            sdk.Query.equal("complete", false), 
+            sdk.Query.equal("type", "media_mention"), 
+            sdk.Query.equal("moderated", true), 
+            sdk.Query.equal("rejected", false),
+            sdk.Query.limit(1)
+        ]);
     
-    const next_order = next_orders[0];
-
-    if ((next_order.data as OrderMediaMentionData).completed_sources.length == (next_order.data as OrderMediaMentionData).selected_sources.length) {
-        next_order.complete = true;
+        if (next_orders == null || !Array.isArray(next_orders)) {
+            send_log("log", "No orders found.");
+            return;
+        }
+        
+        const next_order = next_orders[0];
+    
+        if ((next_order.data as OrderMediaMentionData).completed_sources.length == (next_order.data as OrderMediaMentionData).selected_sources.length) {
+            next_order.complete = true;
+            await update_order(next_order);
+            send_order_completion_message(next_order);
+            return;
+        }
+    
+        send_log("log", `Updating order ${next_order.id} updated_at timestamp ${Date.now()}...`)
+    
+        next_order.updated_at = Date.now();
         await update_order(next_order);
-        send_order_completion_message(next_order);
-        return;
+    
+        await write_article_for_order(next_order);
     }
-
-    send_log("log", `Updating order ${next_order.id} updated_at timestamp ${Date.now()}...`)
-
-    next_order.updated_at = Date.now();
-    await update_order(next_order);
-
-    await write_article_for_order(next_order);
+    catch (e) {
+        send_error(`Error in article writer cron: ${e}`);
+    }
 }
 
 export function start_article_writer_cron()
@@ -53,7 +58,7 @@ export function start_article_writer_cron()
         trigger_article_writer_cron();
     }
 
-    Deno.cron("Media Mention Article Writer", "* */1 * * *", async () => {
+    Deno.cron("Media Mention Article Writer", "*/2 * * * *", async () => {
         trigger_article_writer_cron();
     });
 }
