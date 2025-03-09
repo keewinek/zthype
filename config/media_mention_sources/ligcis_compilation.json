@@ -1,7 +1,7 @@
 {
     "type": "compilation",
     "title": "Przegląd projektów zwolnionych z teorii numer %index%",
-    "id": "literno_compilation",
+    "id": "ligcis_compilation",
     "urlid" : "przeglad_projekow_zwolnionych_z_teorii_numer_%index%",
     "url": "https://ligcis.fwh.is/blog/przeglad_projekow_zwolnionych_z_teorii_numer_%index%",
     "max_orders": 7
