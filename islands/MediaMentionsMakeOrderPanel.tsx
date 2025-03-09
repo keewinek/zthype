@@ -1,6 +1,7 @@
 import Button from "../components/Button.tsx";
 import { useEffect, useState } from "preact/hooks";
 import { add_saved_order } from "../utils/saved_orders.ts";
+import { SPONSOR_DIRECT_LINK } from "../utils/consts.ts";
 
 interface SourceForPicker
 {
@@ -18,7 +19,7 @@ function get_source_count_string(count: number)
 function MediaMentionSourcePick({source_id, title, upd} : {source_id: string, title: string, upd: () => void})
 {
     return (
-        <div class="checkbox-box source block" style="text-align: left;">
+        <div class="checkbox-box source block w-full" style="text-align: left;">
             <input onClick={upd} id={source_id} type="checkbox"/>
             <label for={source_id}><span><i class="fa-solid fa-check"></i></span>{title}</label>
         </div>
@@ -31,6 +32,7 @@ export function MediaMentionsMakeOrderPanel()
     const [error, set_error] = useState<string>("");
     const [loading, set_loading] = useState<boolean>(false);
     const [sources_sorted_randomly, set_sources_sorted_randomly] = useState<Array<SourceForPicker>>([]);
+    const [visited_sponsors_website, set_visited_sponsors_website] = useState<boolean>(false);
     
     function update_sel_sources()
     {
@@ -102,6 +104,12 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
+        if (!visited_sponsors_website) {
+            set_error("Odwiedź stronę naszego sponsora by przejść dalej. (Wróć na tą stronę po wizycie)");
+            set_loading(false);
+            return;
+        }
+
         project_name = encodeURIComponent(project_name);
         project_desc = encodeURIComponent(project_desc);
         project_link = encodeURIComponent(project_link);
@@ -126,6 +134,13 @@ export function MediaMentionsMakeOrderPanel()
                 set_loading(false);
             }
         })
+    }
+
+    function redirect_to_sponsors_website()
+    {
+        set_visited_sponsors_website(true);
+        set_error("");
+        globalThis.open(SPONSOR_DIRECT_LINK, "_blank");
     }
 
     const sources = [
@@ -193,7 +208,7 @@ export function MediaMentionsMakeOrderPanel()
             <div class="panel mt-12">
                 <h2 class="mt-4 mb-2">Jak chcecie, by o was <span class="text-pink">wspomniano</span>?</h2>
                 <p class="text-gray text-justify">Wybierzcie źródła wzmianek medialnych.</p>
-                <div class="mt-6">
+                <div class="mt-6 mb-4">
                     {sources_sorted_randomly.map(source => (
                         <MediaMentionSourcePick key={source.source_id} source_id={source.source_id} title={source.title} upd={update_sel_sources} />
                     ))}
@@ -204,10 +219,15 @@ export function MediaMentionsMakeOrderPanel()
                 }
 
                 {
+                    !visited_sponsors_website &&
+                    <Button text={`Odwiedź stronę naszego sponsora`} onClick={redirect_to_sponsors_website} className="mt-4 mb-2" fa_icon="arrow-right" full/>
+                }
+
+                {
                     loading ?
-                    <Button text={`Składanie zamówienia...`} className="my-4" fa_icon="spinner" border={true} full={true} iconClassName="animate-spin"/>
+                    <Button text={`Składanie zamówienia...`} className="mb-4 mt-2" fa_icon="spinner" border full iconClassName="animate-spin"/>
                     :
-                    <Button text={`Złóż zamówienie (${get_source_count_string(selected_sources.length)})`} onClick={make_order} className="my-4" fa_icon="truck-fast" border={true} disabled={selected_sources.length == 0} full={true}/>
+                    <Button text={`Złóż zamówienie (${get_source_count_string(selected_sources.length)})`} onClick={make_order} className="mb-4 mt-2" fa_icon="truck-fast" border disabled={selected_sources.length == 0} full/>
                 }
                 
             </div>
