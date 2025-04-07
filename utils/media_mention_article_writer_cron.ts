@@ -58,7 +58,7 @@ export function start_article_writer_cron()
         trigger_article_writer_cron();
     }
 
-    Deno.cron("Media Mention Article Writer", "* * * * *", async () => {
+    Deno.cron("Media Mention Article Writer", "1 */2 * * *", async () => {
         trigger_article_writer_cron();
     });
 }
