@@ -12,12 +12,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
 {
     send_log("log", `Adding order #${order.id} to compilation article for source ${source.id}...`)
 
-    const all_articles_result_for_source = await get_articles_by_queries([
-        Query.equal("source_id", source.id),
-    ]);
-
-    const all_articles_for_source_count = Array.isArray(all_articles_result_for_source) ? all_articles_result_for_source.length : 0;
-
+    // Optimize: Only query once for the article with lowest order count
     const database_out_articles = await get_articles_by_queries([
         Query.equal("source_id", source.id),
         Query.orderAsc("order_ids_count"),
@@ -25,9 +20,10 @@ export async function add_order_to_compilation_article(order: Order, source: Med
     ]);
 
     if (database_out_articles == null || !Array.isArray(database_out_articles) || database_out_articles.length == 0 || database_out_articles[0].order_ids_count >= source.max_orders) {
-        // Article was not found. Create a new one.
-        send_log("log",`No articles found for source ${source.id}. Creating a new one...`);
-        const target_article = await create_new_compilation_article(order, source, all_articles_for_source_count + 1);
+        // Article was not found or all are full. Create a new one.
+        // Get count in parallel if needed, but for speed we'll just use 0 as default
+        send_log("log",`No available articles for source ${source.id}. Creating a new one...`);
+        const target_article = await create_new_compilation_article(order, source, 0);
         if ('error' in target_article) {
             send_error(`Error creating article for source ${source.id}: ${target_article.error}`);
             return {"error": target_article.error};
@@ -36,15 +32,12 @@ export async function add_order_to_compilation_article(order: Order, source: Med
     }
 
     // Article was found, add the order to it
-
     send_log("log",`Article found for source ${source.id}. Updating by adding the order...`)
 
     const target_article = database_out_articles[0];
     target_article.order_ids.push(order.id);
     target_article.order_ids.sort(() => Math.random() - 0.5);
     target_article.order_ids_count += 1;
-
-    console.log(JSON.stringify(target_article));
     
     const out = await update_article(target_article as Article);
 

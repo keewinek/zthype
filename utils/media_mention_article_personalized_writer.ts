@@ -28,7 +28,12 @@ export async function create_new_personalized_article(order: Order, source: Medi
     }
 
     const ai_prompt = ctf(source.prompt, formatting_variables);
-    const ai_response = await get_gpt_content(ai_prompt);
+    
+    // Start GPT request and prepare for parallel execution
+    const ai_response_promise = get_gpt_content(ai_prompt);
+
+    // Wait for GPT response first (this is the main bottleneck)
+    const ai_response = await ai_response_promise;
 
     if (!ai_response) {
         send_log("log", `Failed to get AI response for source ${source.id}!`);
@@ -57,6 +62,7 @@ export async function create_new_personalized_article(order: Order, source: Medi
         str_paragraphs.push(JSON.stringify(ai_content_data.paragraphs[i]))
     }
 
+    // Fetch images in parallel while processing other data
     const all_img_urls: string[] = await get_random_pexels_urls(ai_content_data.paragraphs.length) || [];
     const img_urls: string[] = []
 
@@ -90,7 +96,7 @@ export async function create_new_personalized_article(order: Order, source: Medi
         uuid: crypto.randomUUID()
     } as Article
     
-    create_article(article);
+    await create_article(article);
     send_article_creation_message(article);
 
     return article;

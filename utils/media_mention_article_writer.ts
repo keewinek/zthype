@@ -9,8 +9,16 @@ import { Article } from "../interfaces/Article.ts";
 import { add_order_to_compilation_article } from "./media_mention_article_compilation_writer.ts";
 import { create_new_personalized_article } from "./media_mention_article_personalized_writer.ts";
 
+// Cache for source configs to avoid repeated file I/O
+const source_config_cache = new Map<string, MediaMentionSourceConfig>();
+
 export async function load_source_data(source: string)
 {
+    // Check cache first
+    if (source_config_cache.has(source)) {
+        return source_config_cache.get(source)!;
+    }
+
     const source_path = `./config/media_mention_sources/${source}.json`;
 
     if (!existsSync(source_path))
@@ -20,9 +28,28 @@ export async function load_source_data(source: string)
     }
 
     const file_content = await Deno.readTextFile(source_path);
-    const source_data = JSON.parse(file_content);
+    const source_data = JSON.parse(file_content) as MediaMentionSourceConfig;
 
-    return source_data as object;
+    // Cache the result
+    source_config_cache.set(source, source_data);
+
+    return source_data;
+}
+
+// Preload all source configs for faster access
+export async function preload_all_source_configs() {
+    const source_dir = "./config/media_mention_sources/";
+    const files = [];
+    
+    for await (const dirEntry of Deno.readDir(source_dir)) {
+        if (dirEntry.isFile && dirEntry.name.endsWith(".json")) {
+            const source_id = dirEntry.name.replace(".json", "");
+            files.push(load_source_data(source_id));
+        }
+    }
+    
+    await Promise.all(files);
+    send_log("log", `Preloaded ${source_config_cache.size} source configs into cache`);
 }
 
 
@@ -50,36 +77,31 @@ export async function write_article_for_order(order: Order)
         send_error(`Source config file for ${source_id} does not exist.`);
         return; 
     }
-    else if (source_data.type == "compilation")
+    
+    let article: Article | { error: string };
+    
+    if (source_data.type == "compilation")
     {
-        const article = await add_order_to_compilation_article(order, source_data);
-
-        if ('error' in article) {
-            send_error(`Error adding order #${order.id} to compilation article for source ${source_id}: ${article.error}`);
-            return;
-        }
-
-        media_mention_data.completed_sources.push(source_id);
-        media_mention_data.completed_urls.push((article as Article).url);
-
-        await update_order(order);
+        article = await add_order_to_compilation_article(order, source_data);
     }
     else if (source_data.type == "personalized")
     {
-        const article = await create_new_personalized_article(order, source_data);
-
-        if ('error' in article) {
-            send_error(`Error creating personalized article for order #${order.id} for source ${source_id}: ${article.error}`);
-            return;
-        }
-
-        media_mention_data.completed_sources.push(source_id);
-        media_mention_data.completed_urls.push((article as Article).url);
-
-        await update_order(order);
+        article = await create_new_personalized_article(order, source_data);
     }
     else 
     {
         send_error(`Source type ${source_data.type} not supported.`);
+        return;
     }
+
+    if ('error' in article) {
+        send_error(`Error processing order #${order.id} for source ${source_id}: ${article.error}`);
+        return;
+    }
+
+    // Update order with completion status and timestamp in one operation
+    media_mention_data.completed_sources.push(source_id);
+    media_mention_data.completed_urls.push((article as Article).url);
+    order.updated_at = Date.now();
+    await update_order(order);
 }

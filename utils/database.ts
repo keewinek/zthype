@@ -197,21 +197,25 @@ export async function get_orders_by_queries(queries: QueryType[]) {
         
         for (const q of queries) {
             if (q.type === 'equal') {
-                if (Array.isArray(q.value)) {
+                const equalQuery = q as { type: 'equal'; key: string; value: unknown };
+                if (Array.isArray(equalQuery.value)) {
                     // Handle IN clause for arrays
-                    const placeholders = q.value.map(() => '?').join(', ');
-                    conditions.push(`${q.key} IN (${placeholders})`);
-                    values.push(...q.value);
+                    const placeholders = equalQuery.value.map(() => '?').join(', ');
+                    conditions.push(`${equalQuery.key} IN (${placeholders})`);
+                    values.push(...equalQuery.value);
                 } else {
-                    conditions.push(`${q.key} = ?`);
-                    values.push(q.value);
+                    conditions.push(`${equalQuery.key} = ?`);
+                    values.push(equalQuery.value);
                 }
             } else if (q.type === 'orderDesc') {
-                orderClause = ` ORDER BY ${q.key} DESC`;
+                const orderDescQuery = q as { type: 'orderDesc'; key: string };
+                orderClause = ` ORDER BY ${orderDescQuery.key} DESC`;
             } else if (q.type === 'orderAsc') {
-                orderClause = ` ORDER BY ${q.key} ASC`;
+                const orderAscQuery = q as { type: 'orderAsc'; key: string };
+                orderClause = ` ORDER BY ${orderAscQuery.key} ASC`;
             } else if (q.type === 'limit') {
-                limitClause = ` LIMIT ${q.value}`;
+                const limitQuery = q as { type: 'limit'; value: number };
+                limitClause = ` LIMIT ${limitQuery.value}`;
             }
         }
         
@@ -221,7 +225,7 @@ export async function get_orders_by_queries(queries: QueryType[]) {
         
         const result = await client.execute({
             sql: `SELECT * FROM orders${whereClause}${orderClause}${limitClause}`,
-            args: values
+            args: values as (string | number | null | boolean)[]
         });
 
         if (result.rows.length === 0) return null;
@@ -246,21 +250,25 @@ export async function get_articles_by_queries(queries: QueryType[]) {
         
         for (const q of queries) {
             if (q.type === 'equal') {
-                if (Array.isArray(q.value)) {
+                const equalQuery = q as { type: 'equal'; key: string; value: unknown };
+                if (Array.isArray(equalQuery.value)) {
                     // Handle IN clause for arrays
-                    const placeholders = q.value.map(() => '?').join(', ');
-                    conditions.push(`${q.key} IN (${placeholders})`);
-                    values.push(...q.value);
+                    const placeholders = equalQuery.value.map(() => '?').join(', ');
+                    conditions.push(`${equalQuery.key} IN (${placeholders})`);
+                    values.push(...equalQuery.value);
                 } else {
-                    conditions.push(`${q.key} = ?`);
-                    values.push(q.value);
+                    conditions.push(`${equalQuery.key} = ?`);
+                    values.push(equalQuery.value);
                 }
             } else if (q.type === 'orderDesc') {
-                orderClause = ` ORDER BY ${q.key} DESC`;
+                const orderDescQuery = q as { type: 'orderDesc'; key: string };
+                orderClause = ` ORDER BY ${orderDescQuery.key} DESC`;
             } else if (q.type === 'orderAsc') {
-                orderClause = ` ORDER BY ${q.key} ASC`;
+                const orderAscQuery = q as { type: 'orderAsc'; key: string };
+                orderClause = ` ORDER BY ${orderAscQuery.key} ASC`;
             } else if (q.type === 'limit') {
-                limitClause = ` LIMIT ${q.value}`;
+                const limitQuery = q as { type: 'limit'; value: number };
+                limitClause = ` LIMIT ${limitQuery.value}`;
             }
         }
         
@@ -270,7 +278,7 @@ export async function get_articles_by_queries(queries: QueryType[]) {
         
         const result = await client.execute({
             sql: `SELECT * FROM articles${whereClause}${orderClause}${limitClause}`,
-            args: values
+            args: values as (string | number | null | boolean)[]
         });
 
         if (result.rows.length === 0) return null;
@@ -289,7 +297,7 @@ export async function get_order_by_value(key: string, value: unknown) {
     try {
         const result = await client.execute({
             sql: `SELECT * FROM orders WHERE ${key} = ? LIMIT 1`,
-            args: [value]
+            args: [value] as (string | number | null | boolean)[]
         });
 
         if (result.rows.length === 0) return null;
