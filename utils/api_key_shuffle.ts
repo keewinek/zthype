@@ -15,19 +15,19 @@ class APIKey
     }
 }
 
-let all_gemini_keys: APIKey[] = [];
+let all_nvidia_keys: APIKey[] = [];
 init_keys()
 
-export function get_next_gemini_key()
+export function get_next_nvidia_key(): APIKey | null
 {
-    all_gemini_keys = all_gemini_keys.sort((a, b) => a.last_used - b.last_used);
+    all_nvidia_keys = all_nvidia_keys.sort((a, b) => a.last_used - b.last_used);
 
-    if (all_gemini_keys.length == 0) {
-        send_error("API_KEY_SHUFFLE: No API keys found in env. Please add GEMINI_API_KEY to .env file.");
+    if (all_nvidia_keys.length == 0) {
+        send_error("API_KEY_SHUFFLE: No API keys found in env. Please add NVIDIA_API_KEY to .env file.");
         return null;
     }
 
-    const key_to_use = all_gemini_keys[0];
+    const key_to_use = all_nvidia_keys[0];
     key_to_use.last_used = Date.now();
 
     return key_to_use;
@@ -36,16 +36,16 @@ export function get_next_gemini_key()
 function init_keys()
 {
     const env_obj = Deno.env.toObject();
-    const gemini_keys = Object.keys(env_obj).filter(key => key.startsWith("GEMINI_API_KEY"));
+    const nvidia_keys = Object.keys(env_obj).filter(key => key.startsWith("NVIDIA_API_KEY"));
     
-    for (let i = 0; i < gemini_keys.length; i++) {
-        const env_name = gemini_keys[i];
+    for (let i = 0; i < nvidia_keys.length; i++) {
+        const env_name = nvidia_keys[i];
         const api_key = env_obj[env_name];
-        all_gemini_keys.push(new APIKey(api_key, env_name, i));
+        all_nvidia_keys.push(new APIKey(api_key, env_name, i));
     }
     
-    all_gemini_keys = all_gemini_keys.sort(() => Math.random() - 0.5);
+    all_nvidia_keys = all_nvidia_keys.sort(() => Math.random() - 0.5);
 
-    console.log("API_KEY_SHUFFLE: Found ", all_gemini_keys.length , " API keys in env.")
+    console.log("API_KEY_SHUFFLE: Found ", all_nvidia_keys.length , " API keys in env.")
 }
 

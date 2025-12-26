@@ -1,7 +1,6 @@
 import Button from "../components/Button.tsx";
 import { useEffect, useState } from "preact/hooks";
 import { add_saved_order } from "../utils/saved_orders.ts";
-import { SPONSOR_DIRECT_LINK } from "../utils/consts.ts";
 
 interface SourceForPicker
 {
@@ -32,7 +31,6 @@ export function MediaMentionsMakeOrderPanel()
     const [error, set_error] = useState<string>("");
     const [loading, set_loading] = useState<boolean>(false);
     const [sources_sorted_randomly, set_sources_sorted_randomly] = useState<Array<SourceForPicker>>([]);
-    const [visited_sponsors_website, set_visited_sponsors_website] = useState<boolean>(false);
     
     function update_sel_sources()
     {
@@ -104,12 +102,6 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
-        if (!visited_sponsors_website) {
-            set_error("Odwiedź stronę naszego sponsora by przejść dalej. (Wróć na tą stronę po wizycie)");
-            set_loading(false);
-            return;
-        }
-
         project_name = encodeURIComponent(project_name);
         project_desc = encodeURIComponent(project_desc);
         project_link = encodeURIComponent(project_link);
@@ -134,13 +126,6 @@ export function MediaMentionsMakeOrderPanel()
                 set_loading(false);
             }
         })
-    }
-
-    function redirect_to_sponsors_website()
-    {
-        set_visited_sponsors_website(true);
-        set_error("");
-        globalThis.open(SPONSOR_DIRECT_LINK, "_blank");
     }
 
     const sources = [
@@ -216,11 +201,6 @@ export function MediaMentionsMakeOrderPanel()
 
                 { error != "" &&
                     <p class="text-sm text-red-300 my-4" id="order-error"><i class="fa-solid fa-triangle-exclamation mr-2"></i>{error}</p>
-                }
-
-                {
-                    !visited_sponsors_website &&
-                    <Button text={`Odwiedź stronę naszego sponsora`} onClick={redirect_to_sponsors_website} className="mt-4 mb-2" fa_icon="arrow-right" full/>
                 }
 
                 {

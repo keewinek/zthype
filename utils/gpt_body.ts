@@ -42,6 +42,12 @@ export function get_messages_body_content(messages_history: string[][], user_inp
 {
     let body_contents = [];
 
+    // Add system prompt first if provided
+    if (system_prompt && system_prompt.trim() !== "") {
+        body_contents.push({ role: "system", content: system_prompt });
+    }
+
+    // Add message history
     for (let i = 0; i < messages_history.length; i++) {
         const msg = messages_history[i];
         if (msg[0] == "user") {
@@ -51,11 +57,8 @@ export function get_messages_body_content(messages_history: string[][], user_inp
         }
     }
 
-    if (body_contents.length == 0) {
-        body_contents.push({ role: "assistant", content: user_input });
-    }
-
-    body_contents.push({ role: "system", content: system_prompt });
+    // Always add user input as the last message
+    body_contents.push({ role: "user", content: user_input });
 
     return body_contents;
 }
