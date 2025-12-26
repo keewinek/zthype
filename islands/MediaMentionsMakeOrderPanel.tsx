@@ -217,7 +217,7 @@ export function MediaMentionsMakeOrderPanel()
                         placeholder="XXXXXXXX"
                         maxLength={8}
                     />
-                    <p class="text-gray text-xs mt-2">
+                    <p class="text-gray text-xs mt-2 mb-[2rem]">
                         <i class="fa-solid fa-info-circle mr-1"></i>
                         Jeśli nie masz kodu dostępu ZTHype, napisz do nas na instagramie: <a href="https://instagram.com/zt.hype" target="_blank" class="text-pink hover:underline">@zt.hype</a>.
                     </p>
