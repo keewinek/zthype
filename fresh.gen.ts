@@ -21,6 +21,8 @@ import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
 import * as $orders_order_id_ from "./routes/orders/[order_id].tsx";
 import * as $orders_index from "./routes/orders/index.tsx";
+import * as $polityka_prywatnosci from "./routes/polityka-prywatnosci.tsx";
+import * as $regulamin from "./routes/regulamin.tsx";
 import * as $AdminCodesPage from "./islands/AdminCodesPage.tsx";
 import * as $ArticlePage from "./islands/ArticlePage.tsx";
 import * as $LoadingScreen from "./islands/LoadingScreen.tsx";
@@ -53,6 +55,8 @@ const manifest = {
     "./routes/media_mentions.tsx": $media_mentions,
     "./routes/orders/[order_id].tsx": $orders_order_id_,
     "./routes/orders/index.tsx": $orders_index,
+    "./routes/polityka-prywatnosci.tsx": $polityka_prywatnosci,
+    "./routes/regulamin.tsx": $regulamin,
   },
   islands: {
     "./islands/AdminCodesPage.tsx": $AdminCodesPage,
