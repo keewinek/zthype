@@ -82,6 +82,14 @@ async function init_tables() {
         )
     `);
     
+    // Create access_codes table
+    await client.execute(`
+        CREATE TABLE IF NOT EXISTS access_codes (
+            code TEXT PRIMARY KEY,
+            created_at INTEGER NOT NULL
+        )
+    `);
+    
     // Create index on urlid for faster lookups
     await client.execute(`CREATE INDEX IF NOT EXISTS idx_articles_urlid ON articles(urlid)`);
     await client.execute(`CREATE INDEX IF NOT EXISTS idx_articles_source_id ON articles(source_id)`);
@@ -480,5 +488,130 @@ export async function create_article(article: Article) {
     } catch (e) {
         send_error(`[DB Articles] Failed to create article: ${e}`);
         return { "error": String(e) };
+    }
+}
+
+// ==================== ACCESS CODES ====================
+
+export interface AccessCode {
+    code: string;
+    created_at: number;
+}
+
+// Generate a random 8-character access code (uppercase letters and digits)
+function generate_access_code(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+export async function create_access_code(): Promise<{ success: boolean; code?: string; error?: string }> {
+    await connect_client();
+    if (!client) return { success: false, error: "Database not connected" };
+
+    try {
+        // Generate a unique code (retry if collision)
+        let code = generate_access_code();
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        while (attempts < maxAttempts) {
+            const existing = await client.execute({
+                sql: `SELECT code FROM access_codes WHERE code = ?`,
+                args: [code]
+            });
+
+            if (existing.rows.length === 0) {
+                break;
+            }
+
+            code = generate_access_code();
+            attempts++;
+        }
+
+        if (attempts >= maxAttempts) {
+            return { success: false, error: "Failed to generate unique code" };
+        }
+
+        await client.execute({
+            sql: `INSERT INTO access_codes (code, created_at) VALUES (?, ?)`,
+            args: [code, Date.now()]
+        });
+
+        return { success: true, code };
+    } catch (e) {
+        send_error(`[DB Access Codes] Failed to create access code: ${e}`);
+        return { success: false, error: String(e) };
+    }
+}
+
+export async function list_access_codes(): Promise<{ success: boolean; codes?: AccessCode[]; error?: string }> {
+    await connect_client();
+    if (!client) return { success: false, error: "Database not connected" };
+
+    try {
+        const result = await client.execute(`SELECT * FROM access_codes ORDER BY created_at DESC`);
+
+        const codes: AccessCode[] = result.rows.map(row => ({
+            code: row.code as string,
+            created_at: row.created_at as number
+        }));
+
+        return { success: true, codes };
+    } catch (e) {
+        send_error(`[DB Access Codes] Failed to list access codes: ${e}`);
+        return { success: false, error: String(e) };
+    }
+}
+
+export async function delete_access_code(code: string): Promise<{ success: boolean; error?: string }> {
+    await connect_client();
+    if (!client) return { success: false, error: "Database not connected" };
+
+    try {
+        const result = await client.execute({
+            sql: `DELETE FROM access_codes WHERE code = ?`,
+            args: [code]
+        });
+
+        if (result.rowsAffected === 0) {
+            return { success: false, error: "Code not found" };
+        }
+
+        return { success: true };
+    } catch (e) {
+        send_error(`[DB Access Codes] Failed to delete access code: ${e}`);
+        return { success: false, error: String(e) };
+    }
+}
+
+export async function validate_and_consume_access_code(code: string): Promise<{ success: boolean; error?: string }> {
+    await connect_client();
+    if (!client) return { success: false, error: "Database not connected" };
+
+    try {
+        // Check if code exists
+        const existing = await client.execute({
+            sql: `SELECT code FROM access_codes WHERE code = ?`,
+            args: [code]
+        });
+
+        if (existing.rows.length === 0) {
+            return { success: false, error: "Invalid access code" };
+        }
+
+        // Delete the code (consume it)
+        await client.execute({
+            sql: `DELETE FROM access_codes WHERE code = ?`,
+            args: [code]
+        });
+
+        return { success: true };
+    } catch (e) {
+        send_error(`[DB Access Codes] Failed to validate access code: ${e}`);
+        return { success: false, error: String(e) };
     }
 }

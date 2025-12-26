@@ -1,7 +1,7 @@
 import { FreshContext } from "$fresh/server.ts";
 import OrderMediaMentionData from "../../interfaces/MediaMentionData.ts";
 import Order from "../../interfaces/Order.ts";
-import { create_order, get_next_order_id } from "../../utils/database.ts";
+import { create_order, get_next_order_id, validate_and_consume_access_code } from "../../utils/database.ts";
 import { send_error } from "../../utils/discord_webhook_sender.ts";
 import { send_order_placed_message } from "../../utils/special_discord_webhook_sender.ts";
 
@@ -15,10 +15,17 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 		const project_zt_link = url.searchParams.get("project_zt_link");
 		const contact_email = url.searchParams.get("contact_email");
 		const selected_sources = url.searchParams.get("selected_sources");
+		const access_code = url.searchParams.get("access_code");
 	
-		if (!project_name || !project_desc || !project_link || !project_zt_link || !contact_email || !selected_sources) {
-			console.log(project_name, project_desc, project_link, project_zt_link, contact_email, selected_sources	);
+		if (!project_name || !project_desc || !project_link || !project_zt_link || !contact_email || !selected_sources || !access_code) {
+			console.log(project_name, project_desc, project_link, project_zt_link, contact_email, selected_sources, access_code);
 			return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400 });
+		}
+
+		// Validate and consume the access code
+		const code_result = await validate_and_consume_access_code(access_code);
+		if (!code_result.success) {
+			return new Response(JSON.stringify({"error" : "Nieprawidłowy kod dostępu"}), { status: 400 });
 		}
 		if (project_name.length > 255) {
 			return new Response(JSON.stringify({"error" : "Project name too long"}), { status: 400 });

@@ -57,6 +57,7 @@ export function MediaMentionsMakeOrderPanel()
         let project_link = (document.getElementById("project-link") as HTMLInputElement).value;
         let project_zt_link = (document.getElementById("project-zt-link") as HTMLInputElement).value;
         let contact_email = (document.getElementById("contact-email") as HTMLInputElement).value;
+        let access_code = (document.getElementById("access-code") as HTMLInputElement).value.toUpperCase().trim();
         let selected_sources_str = selected_sources.join(",");
 
         if (project_name.length == 0) {
@@ -90,6 +91,12 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
+        if (access_code.length != 8) {
+            set_error("Podaj prawidłowy 8-znakowy kod dostępu ZTHype.");
+            set_loading(false);
+            return;
+        }
+
         if (selected_sources.length == 0) {
             set_error("Wybierz co najmniej jedno źródło wzmianki medialnej.");
             set_loading(false);
@@ -107,9 +114,10 @@ export function MediaMentionsMakeOrderPanel()
         project_link = encodeURIComponent(project_link);
         project_zt_link = encodeURIComponent(project_zt_link);
         contact_email = encodeURIComponent(contact_email);
+        access_code = encodeURIComponent(access_code);
         selected_sources_str = encodeURIComponent(selected_sources_str);
 
-        fetch(`/api/order_media_mention?project_name=${project_name}&project_desc=${project_desc}&project_link=${project_link}&project_zt_link=${project_zt_link}&contact_email=${contact_email}&selected_sources=${selected_sources_str}`)
+        fetch(`/api/order_media_mention?project_name=${project_name}&project_desc=${project_desc}&project_link=${project_link}&project_zt_link=${project_zt_link}&contact_email=${contact_email}&selected_sources=${selected_sources_str}&access_code=${access_code}`)
         .then(response => response.json())
         .then(data => {
             if (data.success)
@@ -197,6 +205,22 @@ export function MediaMentionsMakeOrderPanel()
                     {sources_sorted_randomly.map(source => (
                         <MediaMentionSourcePick key={source.source_id} source_id={source.source_id} title={source.title} upd={update_sel_sources} />
                     ))}
+                </div>
+
+                <div class="form-group mt-6">
+                    <label for="access-code">Kod dostępu ZTHype</label>
+                    <input 
+                        type="text" 
+                        id="access-code" 
+                        name="access-code" 
+                        class="input w-full font-mono tracking-wider uppercase" 
+                        placeholder="XXXXXXXX"
+                        maxLength={8}
+                    />
+                    <p class="text-gray text-xs mt-2">
+                        <i class="fa-solid fa-info-circle mr-1"></i>
+                        Jeśli nie masz kodu dostępu ZTHype, napisz do nas na instagramie: <a href="https://instagram.com/zt.hype" target="_blank" class="text-pink hover:underline">@zt.hype</a>.
+                    </p>
                 </div>
 
                 { error != "" &&

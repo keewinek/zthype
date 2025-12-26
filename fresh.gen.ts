@@ -4,8 +4,12 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $admin_codes from "./routes/admin/codes.tsx";
 import * as $api_admin_accept_order from "./routes/api/admin_accept_order.ts";
+import * as $api_admin_create_code from "./routes/api/admin_create_code.ts";
+import * as $api_admin_list_codes from "./routes/api/admin_list_codes.ts";
 import * as $api_admin_reject_order from "./routes/api/admin_reject_order.ts";
+import * as $api_admin_remove_code from "./routes/api/admin_remove_code.ts";
 import * as $api_get_article from "./routes/api/get_article.ts";
 import * as $api_get_articles_form_source_ids from "./routes/api/get_articles_form_source_ids.ts";
 import * as $api_get_order from "./routes/api/get_order.ts";
@@ -17,6 +21,7 @@ import * as $index from "./routes/index.tsx";
 import * as $media_mentions from "./routes/media_mentions.tsx";
 import * as $orders_order_id_ from "./routes/orders/[order_id].tsx";
 import * as $orders_index from "./routes/orders/index.tsx";
+import * as $AdminCodesPage from "./islands/AdminCodesPage.tsx";
 import * as $ArticlePage from "./islands/ArticlePage.tsx";
 import * as $LoadingScreen from "./islands/LoadingScreen.tsx";
 import * as $MediaMentionsMakeOrderPanel from "./islands/MediaMentionsMakeOrderPanel.tsx";
@@ -30,8 +35,12 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/admin/codes.tsx": $admin_codes,
     "./routes/api/admin_accept_order.ts": $api_admin_accept_order,
+    "./routes/api/admin_create_code.ts": $api_admin_create_code,
+    "./routes/api/admin_list_codes.ts": $api_admin_list_codes,
     "./routes/api/admin_reject_order.ts": $api_admin_reject_order,
+    "./routes/api/admin_remove_code.ts": $api_admin_remove_code,
     "./routes/api/get_article.ts": $api_get_article,
     "./routes/api/get_articles_form_source_ids.ts":
       $api_get_articles_form_source_ids,
@@ -46,6 +55,7 @@ const manifest = {
     "./routes/orders/index.tsx": $orders_index,
   },
   islands: {
+    "./islands/AdminCodesPage.tsx": $AdminCodesPage,
     "./islands/ArticlePage.tsx": $ArticlePage,
     "./islands/LoadingScreen.tsx": $LoadingScreen,
     "./islands/MediaMentionsMakeOrderPanel.tsx": $MediaMentionsMakeOrderPanel,
