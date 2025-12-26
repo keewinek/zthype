@@ -4,7 +4,6 @@ import { MediaMentionSourceConfig } from "../interfaces/MediaMentionSourceConfig
 import Order from "../interfaces/Order.ts";
 import { create_article, get_articles_by_queries, update_article, update_order } from "./database.ts";
 import { send_error, send_log } from "./discord_webhook_sender.ts";
-import * as sdk from "https://deno.land/x/appwrite/mod.ts";
 import { ctf } from "./formatting_compiler.ts";
 import { Article } from "../interfaces/Article.ts";
 import { add_order_to_compilation_article } from "./media_mention_article_compilation_writer.ts";

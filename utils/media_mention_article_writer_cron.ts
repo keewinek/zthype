@@ -1,5 +1,4 @@
-import * as sdk from "https://deno.land/x/appwrite/mod.ts";
-import { create_article, get_articles_by_queries, get_orders_by_queries, update_article, update_order } from "./database.ts";
+import { create_article, get_articles_by_queries, get_orders_by_queries, update_article, update_order, Query } from "./database.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import { send_error, send_log } from "./discord_webhook_sender.ts";
 import Order from "../interfaces/Order.ts";
@@ -15,12 +14,12 @@ export async function trigger_article_writer_cron()
     try {
         send_log("log", "Running article writer cron...")
         const next_orders = await get_orders_by_queries([
-            sdk.Query.orderAsc("updated_at"), 
-            sdk.Query.equal("complete", false), 
-            sdk.Query.equal("type", "media_mention"), 
-            sdk.Query.equal("moderated", true), 
-            sdk.Query.equal("rejected", false),
-            sdk.Query.limit(1)
+            Query.orderAsc("updated_at"), 
+            Query.equal("complete", false), 
+            Query.equal("type", "media_mention"), 
+            Query.equal("moderated", true), 
+            Query.equal("rejected", false),
+            Query.limit(1)
         ]);
     
         if (next_orders == null || !Array.isArray(next_orders)) {

@@ -2,9 +2,8 @@ import { existsSync } from "$std/fs/exists.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import { MediaMentionSourceConfig } from "../interfaces/MediaMentionSourceConfig.ts";
 import Order from "../interfaces/Order.ts";
-import { create_article, get_articles_by_queries, update_article, update_order } from "./database.ts";
+import { create_article, get_articles_by_queries, update_article, update_order, Query } from "./database.ts";
 import { send_error, send_log } from "./discord_webhook_sender.ts";
-import * as sdk from "https://deno.land/x/appwrite/mod.ts";
 import { ctf } from "./formatting_compiler.ts";
 import { Article } from "../interfaces/Article.ts";
 import { send_article_creation_message } from "./special_discord_webhook_sender.ts";
@@ -14,15 +13,15 @@ export async function add_order_to_compilation_article(order: Order, source: Med
     send_log("log", `Adding order #${order.id} to compilation article for source ${source.id}...`)
 
     const all_articles_result_for_source = await get_articles_by_queries([
-        sdk.Query.equal("source_id", source.id),
+        Query.equal("source_id", source.id),
     ]);
 
     const all_articles_for_source_count = Array.isArray(all_articles_result_for_source) ? all_articles_result_for_source.length : 0;
 
     const database_out_articles = await get_articles_by_queries([
-        sdk.Query.equal("source_id", source.id),
-        sdk.Query.orderAsc("order_ids_count"),
-        sdk.Query.limit(1)
+        Query.equal("source_id", source.id),
+        Query.orderAsc("order_ids_count"),
+        Query.limit(1)
     ]);
 
     if (database_out_articles == null || !Array.isArray(database_out_articles) || database_out_articles.length == 0 || database_out_articles[0].order_ids_count >= source.max_orders) {
