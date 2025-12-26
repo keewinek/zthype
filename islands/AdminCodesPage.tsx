@@ -15,7 +15,7 @@ export default function AdminCodesPage() {
     const [copied_code, set_copied_code] = useState<string | null>(null);
 
     useEffect(() => {
-        const stored_password = localStorage.getItem("admin_password");
+        const stored_password = localStorage.getItem("admin");
         set_admin_password(stored_password);
         
         if (stored_password) {
@@ -105,13 +105,13 @@ export default function AdminCodesPage() {
                 </h1>
                 <p class="text-gray text-justify">
                     Nie masz ustawionego hasła administratora w localStorage. 
-                    Aby uzyskać dostęp do tej strony, ustaw wartość <code class="bg-background-light px-2 py-1 rounded">admin_password</code> w localStorage przeglądarki.
+                    Aby uzyskać dostęp do tej strony, ustaw wartość <code class="bg-background-light px-2 py-1 rounded">admin</code> w localStorage przeglądarki.
                 </p>
                 <p class="text-gray text-sm mt-4">
                     Otwórz konsolę deweloperską (F12) i wpisz:
                 </p>
                 <pre class="bg-background-light p-4 rounded mt-2 text-sm overflow-x-auto">
-                    <code>localStorage.setItem("admin_password", "TWOJE_HASLO")</code>
+                    <code>localStorage.setItem("admin", "TWOJE_HASLO")</code>
                 </pre>
             </div>
         );
