@@ -1,6 +1,6 @@
 import {useEffect, useState} from "preact/hooks";
 import LoadingScreen from "./LoadingScreen.tsx";
-import { useSignal } from "https://esm.sh/v135/@preact/signals@1.2.2/X-ZS8q/dist/signals.d.ts";
+import { useSignal } from "@preact/signals";
 import Order from "../interfaces/Order.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import Button from "../components/Button.tsx";

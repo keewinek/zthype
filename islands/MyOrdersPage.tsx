@@ -1,6 +1,5 @@
 import {useEffect, useState} from "preact/hooks";
 import LoadingScreen from "./LoadingScreen.tsx";
-import { useSignal } from "https://esm.sh/v135/@preact/signals@1.2.2/X-ZS8q/dist/signals.d.ts";
 import Order from "../interfaces/Order.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import { OrderStatusBadge } from "./OrderPage.tsx";
@@ -24,6 +23,7 @@ export default function MyOrdersPage() {
                 console.error(response);
                 set_error(response.statusText);
                 set_loading(false);
+                return;
             }
 
             const data = await response.json();
@@ -31,6 +31,8 @@ export default function MyOrdersPage() {
             if (data.error) {
                 console.error(data.error);
                 set_error(data.error);
+                set_loading(false);
+                return;
             }
 
             set_orders(data.orders);

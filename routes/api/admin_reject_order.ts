@@ -21,10 +21,8 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
     const out_data = await get_order_by_value("id", parseInt(order_id));
 
     if (!out_data || 'error' in out_data) {
-        return new Response(JSON.stringify({"error" : "Order not found"}), { status: 400 });
-    }
-    if ('error' in out_data) {
-        return new Response(JSON.stringify({"error" : out_data.error}), { status: 400 });
+        const error_msg = (out_data && 'error' in out_data) ? out_data.error : "Order not found";
+        return new Response(JSON.stringify({"error" : error_msg}), { status: 400 });
     }
 
     const order: Order = out_data as Order;

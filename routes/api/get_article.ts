@@ -23,10 +23,12 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
     const out_data = await get_articles_by_queries([Query.equal("urlid", urlid), Query.equal("source_id", source_ids)]);
 
     if (!out_data || 'error' in out_data) {
-        return new Response(JSON.stringify({"error" : "Article not found " + out_data?.error}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
+        const error_msg = (out_data && 'error' in out_data) ? out_data.error : "Article not found";
+        return new Response(JSON.stringify({"error" : error_msg}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
-    if ('error' in out_data) {
-        return new Response(JSON.stringify({"error" : out_data.error}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
+
+    if (!Array.isArray(out_data) || out_data.length === 0) {
+        return new Response(JSON.stringify({"error" : "Article not found"}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
     const article = out_data[0] as Article;

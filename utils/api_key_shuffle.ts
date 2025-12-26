@@ -16,22 +16,6 @@ class APIKey
 }
 
 let all_nvidia_keys: APIKey[] = [];
-init_keys()
-
-export function get_next_nvidia_key(): APIKey | null
-{
-    all_nvidia_keys = all_nvidia_keys.sort((a, b) => a.last_used - b.last_used);
-
-    if (all_nvidia_keys.length == 0) {
-        send_error("API_KEY_SHUFFLE: No API keys found in env. Please add NVIDIA_API_KEY to .env file.");
-        return null;
-    }
-
-    const key_to_use = all_nvidia_keys[0];
-    key_to_use.last_used = Date.now();
-
-    return key_to_use;
-}
 
 function init_keys()
 {
@@ -47,5 +31,22 @@ function init_keys()
     all_nvidia_keys = all_nvidia_keys.sort(() => Math.random() - 0.5);
 
     console.log("API_KEY_SHUFFLE: Found ", all_nvidia_keys.length , " API keys in env.")
+}
+
+init_keys();
+
+export function get_next_nvidia_key(): APIKey | null
+{
+    all_nvidia_keys = all_nvidia_keys.sort((a, b) => a.last_used - b.last_used);
+
+    if (all_nvidia_keys.length == 0) {
+        send_error("API_KEY_SHUFFLE: No API keys found in env. Please add NVIDIA_API_KEY to .env file.");
+        return null;
+    }
+
+    const key_to_use = all_nvidia_keys[0];
+    key_to_use.last_used = Date.now();
+
+    return key_to_use;
 }
 
