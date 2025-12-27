@@ -21,9 +21,14 @@ export async function add_order_to_compilation_article(order: Order, source: Med
 
     if (database_out_articles == null || !Array.isArray(database_out_articles) || database_out_articles.length == 0 || database_out_articles[0].order_ids_count >= source.max_orders) {
         // Article was not found or all are full. Create a new one.
-        // Get count in parallel if needed, but for speed we'll just use 0 as default
-        send_log("log",`No available articles for source ${source.id}. Creating a new one...`);
-        const target_article = await create_new_compilation_article(order, source, 0);
+        // Count existing compilation articles for this source to determine the next index (starting from 1)
+        const all_articles = await get_articles_by_queries([
+            Query.equal("source_id", source.id)
+        ]);
+        const article_count = (all_articles != null && Array.isArray(all_articles)) ? all_articles.length : 0;
+        const next_index = article_count + 1; // Start from 1 instead of 0
+        send_log("log",`No available articles for source ${source.id}. Creating a new one with index ${next_index}...`);
+        const target_article = await create_new_compilation_article(order, source, next_index);
         if ('error' in target_article) {
             send_error(`Error creating article for source ${source.id}: ${target_article.error}`);
             return {"error": target_article.error};
@@ -51,7 +56,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
     return target_article;
 }
 
-export async function create_new_compilation_article(order: Order, source: MediaMentionSourceConfig, article_index: number = 0)
+export async function create_new_compilation_article(order: Order, source: MediaMentionSourceConfig, article_index: number = 1)
 {
     let formatting_variables = {
         "index": article_index.toString(),
