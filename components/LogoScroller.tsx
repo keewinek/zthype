@@ -11,6 +11,7 @@ export default function LogoScroller() {
     "/src/qulia_logo.png",
     "/src/socjovibe_logo.png",
     "/src/mcbump_logo.png",
+    "/src/rbxvibecoder_logo.png",
   ];
 
   // Duplicate logos for seamless infinite scroll

@@ -160,6 +160,8 @@ export function MediaMentionsMakeOrderPanel()
         { source_id: "mcbump_personalized_article", title: "McBump - Dodamy na naszą stronę artykuł o was." },
         { source_id: "ligcis_compilation", title: "LigCis - Napiszemy o waszym projekcie w naszej kompilacji projektów." },
         { source_id: "ligcis_personalized_article", title: "LigCis - Napiszemy o was." },
+        { source_id: "rbxvibecoder_projects_review", title: "Vibe Coder Blog - Dodamy was do przeglądu projektów społecznych." },
+        { source_id: "rbxvibecoder_personalized_article", title: "Vibe Coder Blog - Napiszemy artykuł o waszym projekcie z naciskiem na aspekty technologiczne." },
     ] as SourceForPicker[];
 
     if(sources_sorted_randomly.length == 0)

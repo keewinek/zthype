@@ -1,0 +1,8 @@
+{
+    "type": "personalized",
+    "id": "rbxvibecoder_personalized_article",
+    "url": "https://rbxvibecoder.com/blog/%urlid%",
+    "max_orders": 1,
+    "prompt": "Write an article about a social project completed as part of Zwolnieni z Teorii, named %project_title%. Project description: %project_description%. Create a title for the article, and send the entire article to me in JSON format that looks like this: {\"title\": \"ENTER TITLE HERE\", \"paragraphs\": [{\"header\" : \"ENTER FIRST PARAGRAPH TITLE\", \"content\": \"ENTER CONTENT\"}, {\"header\" : \"ENTER SECOND PARAGRAPH TITLE\", \"content\": \"ENTER CONTENT\"}]}. The content should be approximately 500 words (4-5 paragraphs) and have no formatting like bold text, links, or anything of that sort. When writing the article and creating the title, focus on technological innovation, game development, digital solutions, and how the project leverages modern technology tools and platforms. Emphasize the technical aspects, development methodologies, and innovative use of digital platforms. The blog you're writing for is called Vibe Coder Blog, which focuses on Roblox development, AI-powered tools, and game development innovation."
+}
+
