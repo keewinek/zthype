@@ -1,20 +1,61 @@
 import { PageProps } from "$fresh/server.ts";
 import TopNav from "../../islands/TopNav.tsx";
 import { Article } from "../../interfaces/Article.ts";
-import { get_articles_by_queries, Query } from "../../utils/database.ts";
+import { MediaMentionSourceConfig } from "../../interfaces/MediaMentionSourceConfig.ts";
 
-const SOURCE_IDS = ["zt_hype_blog_projects_review", "zt_hype_blog_personalized_article"];
-
-async function fetchArticles(): Promise<Article[]> {
+async function getZTHypeSourceIds(): Promise<string[]> {
   try {
-    const result = await get_articles_by_queries([
-      Query.equal("source_id", SOURCE_IDS),
-      Query.orderDesc("created_at")
-    ]);
+    const configDir = "config/media_mention_sources";
+    const files = [];
     
-    if (result && !('error' in result) && Array.isArray(result)) {
-      return result;
+    for await (const dirEntry of Deno.readDir(configDir)) {
+      if (dirEntry.isFile && dirEntry.name.endsWith(".json")) {
+        files.push(dirEntry.name);
+      }
     }
+    
+    const sourceIds: string[] = [];
+    
+    for (const file of files) {
+      if (file.startsWith("zt_hype_blog_")) {
+        const configPath = `${configDir}/${file}`;
+        const configText = await Deno.readTextFile(configPath);
+        const config: MediaMentionSourceConfig = JSON.parse(configText);
+        if (config.id) {
+          sourceIds.push(config.id);
+        }
+      }
+    }
+    
+    return sourceIds;
+  } catch (error) {
+    console.error("Error reading source configs:", error);
+    // Fallback to hardcoded IDs if config reading fails
+    return ["zt_hype_blog_projects_review", "zt_hype_blog_personalized_article"];
+  }
+}
+
+async function fetchArticles(requestUrl: string): Promise<Article[]> {
+  try {
+    const sourceIds = await getZTHypeSourceIds();
+    
+    if (sourceIds.length === 0) {
+      return [];
+    }
+    
+    // Construct API URL from request URL
+    const url = new URL(requestUrl);
+    const baseUrl = `${url.protocol}//${url.host}`;
+    const apiUrl = `${baseUrl}/api/get_articles_form_source_ids?source_ids=${sourceIds.join(",")}`;
+    
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    if (data.success && Array.isArray(data.articles)) {
+      // Sort by created_at descending (newest first)
+      return data.articles.sort((a: Article, b: Article) => b.created_at - a.created_at);
+    }
+    
     return [];
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -23,7 +64,7 @@ async function fetchArticles(): Promise<Article[]> {
 }
 
 export default async function BlogHome(props: PageProps) {
-  const articles = await fetchArticles();
+  const articles = await fetchArticles(props.url);
 
   return (
     <>
@@ -53,15 +94,17 @@ export default async function BlogHome(props: PageProps) {
                     class="bg-background-dark/50 rounded-lg border border-background-light/50 hover:border-pink/50 duration-200 overflow-hidden group no-underline hover:no-underline"
                   >
                     {/* Article Image */}
-                    {article.img_urls && article.img_urls.length > 0 && (
-                      <div class="w-full h-48 overflow-hidden">
+                    <div class="w-full h-48 overflow-hidden bg-background-light flex items-center justify-center">
+                      {article.img_urls && article.img_urls.length > 0 ? (
                         <img
                           src={article.img_urls[0]}
                           alt={article.title}
                           class="w-full h-full object-cover group-hover:scale-110 duration-300"
                         />
-                      </div>
-                    )}
+                      ) : (
+                        <i class="fa-solid fa-newspaper text-6xl text-gray"></i>
+                      )}
+                    </div>
                     
                     {/* Article Content */}
                     <div class="p-6">
