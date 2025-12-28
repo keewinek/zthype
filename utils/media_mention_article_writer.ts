@@ -12,14 +12,38 @@ import { create_new_personalized_article } from "./media_mention_article_persona
 // Cache for source configs to avoid repeated file I/O
 const source_config_cache = new Map<string, MediaMentionSourceConfig>();
 
+// Typo corrections: maps common typos to correct source IDs
+const typo_corrections: Record<string, string> = {
+    "quila_personalized_article": "qulia_personalized_article",
+    "quila_compilation": "qulia_compilation",
+};
+
+function correct_source_typo(source: string): string {
+    return typo_corrections[source] || source;
+}
+
 export async function load_source_data(source: string)
 {
-    // Check cache first
+    // Check cache first (using original source ID)
     if (source_config_cache.has(source)) {
         return source_config_cache.get(source)!;
     }
 
-    const source_path = `./config/media_mention_sources/${source}.json`;
+    // Try original source ID first
+    let source_path = `./config/media_mention_sources/${source}.json`;
+    let corrected_source = source;
+
+    // If file doesn't exist, try typo correction
+    if (!existsSync(source_path)) {
+        const corrected = correct_source_typo(source);
+        if (corrected !== source) {
+            corrected_source = corrected;
+            source_path = `./config/media_mention_sources/${corrected_source}.json`;
+            
+            // Log the typo correction
+            send_log("log", `Typo correction: "${source}" -> "${corrected_source}"`);
+        }
+    }
 
     if (!existsSync(source_path))
     {
@@ -39,8 +63,12 @@ export async function load_source_data(source: string)
     const file_content = await Deno.readTextFile(source_path);
     const source_data = JSON.parse(file_content) as MediaMentionSourceConfig;
 
-    // Cache the result
+    // Cache the result using both original and corrected source IDs
+    // This allows future lookups with either ID to work
     source_config_cache.set(source, source_data);
+    if (corrected_source !== source) {
+        source_config_cache.set(corrected_source, source_data);
+    }
 
     return source_data;
 }
