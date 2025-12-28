@@ -4,6 +4,7 @@ import Order from "../../interfaces/Order.ts";
 import { create_order, get_next_order_id, validate_and_consume_access_code } from "../../utils/database.ts";
 import { send_error } from "../../utils/discord_webhook_sender.ts";
 import { send_order_placed_message } from "../../utils/special_discord_webhook_sender.ts";
+import { correct_source_ids_typos } from "../../utils/source_id_typo_correction.ts";
 
 export const handler = async (_req: Request, _ctx: FreshContext): Promise<Response> => {
 	try {
@@ -59,7 +60,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 				project_desc: project_desc,
 				project_link: project_link,
 				project_zt_link: project_zt_link || "",
-				selected_sources: selected_sources.split(","),
+				selected_sources: correct_source_ids_typos(selected_sources.split(",")),
 				completed_sources: [],
 				completed_urls: [],
 			} as OrderMediaMentionData,

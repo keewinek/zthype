@@ -1,5 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { get_articles_by_queries, Query } from "../../utils/database.ts";
+import { correct_source_ids_typos } from "../../utils/source_id_typo_correction.ts";
 
 export const handler = async (_req: Request, _ctx: FreshContext): Promise<Response> => {
     const url = new URL(_req.url);
@@ -9,10 +10,11 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
         return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
-    // Split and filter out empty strings, trim whitespace
-    const source_ids = source_ids_param.split(",")
-        .map(id => id.trim())
-        .filter(id => id.length > 0);
+    // Split and filter out empty strings, trim whitespace, and correct typos
+    const source_ids = correct_source_ids_typos(
+        source_ids_param.split(",")
+            .filter(id => id.trim().length > 0)
+    );
 
     if (source_ids.length === 0) {
         return new Response(JSON.stringify({"error" : "No valid source_ids provided"}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });

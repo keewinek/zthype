@@ -4,13 +4,14 @@ import { create_order, get_articles_by_queries, get_next_order_id, get_order_by_
 import { Article } from "../../interfaces/Article.ts";
 import get_paragraphs_from_article from "../../utils/get_paragraphs_from_article.ts";
 import { Paragraph } from "../../interfaces/Paragraph.ts";
+import { correct_source_ids_typos } from "../../utils/source_id_typo_correction.ts";
 
 export const handler = async (_req: Request, _ctx: FreshContext): Promise<Response> => {
     const url = new URL(_req.url);
     const urlid = url.searchParams.get("urlid");
-    const source_ids = url.searchParams.get("source_ids")?.split(",");
+    const source_ids_param = url.searchParams.get("source_ids");
 
-    if (!urlid || !source_ids) {
+    if (!urlid || !source_ids_param) {
         return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400, headers: { "Access-Control-Allow-Origin": "*" } });
     }
 
@@ -19,6 +20,9 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
         const json = await Deno.readTextFile("config/test_article_response.json")
         return new Response(json, { status: 200, headers: { "Access-Control-Allow-Origin": "*" } });
     }
+
+    // Correct typos in source IDs
+    const source_ids = correct_source_ids_typos(source_ids_param.split(","));
 
     const out_data = await get_articles_by_queries([Query.equal("urlid", urlid), Query.equal("source_id", source_ids)]);
 

@@ -8,19 +8,10 @@ import { ctf } from "./formatting_compiler.ts";
 import { Article } from "../interfaces/Article.ts";
 import { add_order_to_compilation_article } from "./media_mention_article_compilation_writer.ts";
 import { create_new_personalized_article } from "./media_mention_article_personalized_writer.ts";
+import { correct_source_id_typo } from "./source_id_typo_correction.ts";
 
 // Cache for source configs to avoid repeated file I/O
 const source_config_cache = new Map<string, MediaMentionSourceConfig>();
-
-// Typo corrections: maps common typos to correct source IDs
-const typo_corrections: Record<string, string> = {
-    "quila_personalized_article": "qulia_personalized_article",
-    "quila_compilation": "qulia_compilation",
-};
-
-function correct_source_typo(source: string): string {
-    return typo_corrections[source] || source;
-}
 
 export async function load_source_data(source: string)
 {
@@ -35,7 +26,7 @@ export async function load_source_data(source: string)
 
     // If file doesn't exist, try typo correction
     if (!existsSync(source_path)) {
-        const corrected = correct_source_typo(source);
+        const corrected = correct_source_id_typo(source);
         if (corrected !== source) {
             corrected_source = corrected;
             source_path = `./config/media_mention_sources/${corrected_source}.json`;
@@ -98,8 +89,10 @@ export async function write_article_for_order(order: Order)
     let source_id = "";
 
     for (const selected_source of media_mention_data.selected_sources) {
-        if (media_mention_data.completed_sources.includes(selected_source)) continue;
-        source_id = selected_source;
+        // Correct any typos in source IDs (handles old orders with typos)
+        const corrected_source = correct_source_id_typo(selected_source);
+        if (media_mention_data.completed_sources.includes(corrected_source)) continue;
+        source_id = corrected_source;
         break;
     }
 
