@@ -161,7 +161,9 @@ export default function OrderPage({order_id} : {order_id: number}) {
                                 <p><b class="text-pink"><i class="fa-solid fa-heading w-6"></i>Nazwa projektu:</b> {(order.data as OrderMediaMentionData).project_name}</p>
                                 <p class="text-justify"><b class="text-pink"><i class="fa-solid fa-file-lines w-6"></i>Opis projektu:</b> {(order.data as OrderMediaMentionData).project_desc}</p>
                                 <p><b class="text-pink"><i class="fa-solid fa-link w-6"></i>Link do projektu (sociale):</b> <a href={(order.data as OrderMediaMentionData).project_link} target="_blank" rel="noopener noreferrer">{(order.data as OrderMediaMentionData).project_link}</a></p>
-                                <p><b class="text-pink"><i class="fa-solid fa-link w-6"></i>Link do projektu na platformie ZwzT:</b> <a href={(order.data as OrderMediaMentionData).project_zt_link} target="_blank" rel="noopener noreferrer">{(order.data as OrderMediaMentionData).project_zt_link}</a></p>
+                                {(order.data as OrderMediaMentionData).project_zt_link && (order.data as OrderMediaMentionData).project_zt_link.length > 0 && (
+                                    <p><b class="text-pink"><i class="fa-solid fa-link w-6"></i>Link do projektu na platformie ZwzT:</b> <a href={(order.data as OrderMediaMentionData).project_zt_link} target="_blank" rel="noopener noreferrer">{(order.data as OrderMediaMentionData).project_zt_link}</a></p>
+                                )}
                                 <p><b class="text-pink">
                                     <i class="fa-solid fa-newspaper w-6"></i>Opublikowane artykuły:</b> &nbsp;
                                     {(order.data as OrderMediaMentionData).completed_urls.length || 0}<span class="text-gray">/{(order.data as OrderMediaMentionData).selected_sources.length}</span>

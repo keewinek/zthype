@@ -13,15 +13,14 @@ export default function Home() {
         <SplashScreen />
         <TopNav />
         <div class="panel">
-          <h1 class="my-4">
+          <h1 class="my-4 mb-8">
             Zdobądź <span class="text-pink">wzmianki medialne</span>.
           </h1>
           <p class="text-gray text-justify">
-            Wzmianka medialna na platformie Zwolnionych z Teorii, to wpis na
-            stronie mediów, na stronie blogu lub na stronie popularno naukowej i
-            innych. Współpracujemy z wieloma stronami blogowymi, opierających
-            swoje treści na projektach Zwolnionych z Teorii, a na tej stronie
-            możesz zamówić wpisy dla twojego projektu.
+            Napiszemy o waszym projekcie społecznym na naszych blogach i stronach partnerskich. 
+            Współpracujemy z wieloma renomowanymi stronami blogowymi, które doceniają wartościowe 
+            treści o projektach społecznych. Dzięki naszej sieci partnerów, możesz zamówić 
+            profesjonalne wpisy o swoim projekcie, które dotrą do szerokiego grona odbiorców.
           </p>
 
           <h2 class="my-4 mt-12">Współpracujemy z tymi stronami:</h2>

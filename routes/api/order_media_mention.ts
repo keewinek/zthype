@@ -17,7 +17,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 		const selected_sources = url.searchParams.get("selected_sources");
 		const access_code = url.searchParams.get("access_code");
 	
-		if (!project_name || !project_desc || !project_link || !project_zt_link || !contact_email || !selected_sources || !access_code) {
+		if (!project_name || !project_desc || !project_link || !contact_email || !selected_sources || !access_code) {
 			console.log(project_name, project_desc, project_link, project_zt_link, contact_email, selected_sources, access_code);
 			return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400 });
 		}
@@ -36,7 +36,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 		if (project_link.length > 255) {
 			return new Response(JSON.stringify({"error" : "Project link too long"}), { status: 400 });
 		}
-		if (project_zt_link.length > 255) {
+		if (project_zt_link && project_zt_link.length > 255) {
 			return new Response(JSON.stringify({"error" : "Project ZwzT link too long"}), { status: 400 });
 		}
 		if (contact_email.length > 255) {
@@ -58,7 +58,7 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 				project_name: project_name,
 				project_desc: project_desc,
 				project_link: project_link,
-				project_zt_link: project_zt_link,
+				project_zt_link: project_zt_link || "",
 				selected_sources: selected_sources.split(","),
 				completed_sources: [],
 				completed_urls: [],

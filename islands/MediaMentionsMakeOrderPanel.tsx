@@ -79,8 +79,9 @@ export function MediaMentionsMakeOrderPanel()
             return;
         }
 
-        if (project_zt_link.length == 0 || !project_zt_link.startsWith("https://zwolnienizteorii.pl/a/#/app/project-details/")) {
-            set_error("Podaj prawidłowy link do waszego projektu na platformie Zwolnionych z Teorii.");
+        // Validate ZT link only if provided
+        if (project_zt_link.length > 0 && !project_zt_link.startsWith("https://zwolnienizteorii.pl/a/#/app/project-details/")) {
+            set_error("Podaj prawidłowy link do waszego projektu na platformie Zwolnionych z Teorii lub pozostaw pole puste.");
             set_loading(false);
             return;
         }
@@ -188,8 +189,9 @@ export function MediaMentionsMakeOrderPanel()
                 </div>
 
                 <div class="form-group">
-                    <label for="project-zt-link">Link do projektu Zwolnionych z Teorii, z bazy projektów</label>
+                    <label for="project-zt-link">Link do projektu na platformie Zwolnionych z Teorii (opcjonalne)</label>
                     <input type="text" id="project-zt-link" name="project-zt-link" class="input w-full" placeholder="https://zwolnienizteorii.pl/a/#/app/project-details/xxxxxxx"/>
+                    <p class="text-gray text-xs mt-1">Jeśli twój projekt jest dostępny na platformie Zwolnionych z Teorii, możesz podać link. Pole jest opcjonalne.</p>
                 </div>
 
                 <div class="form-group">
