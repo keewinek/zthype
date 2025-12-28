@@ -51,6 +51,8 @@ export default function Home() {
 
           </div>
         </div>
+        
+        {/* Intro Section */}
         <div class="px-4">
           <p class="text-xl max-md:text-lg text-gray max-w-2xl mx-auto text-justify mt-[5rem] mb-16">
             Mamy wieloletnie doświadczenie w tworzeniu wysokiej jakości treści o projektach społecznych. 
@@ -58,24 +60,25 @@ export default function Home() {
             profesjonalne podejście do każdego projektu. Dzięki naszemu doświadczeniu i rozległej sieci 
             partnerów, pomagamy projektom społecznym zdobyć zasłużoną uwagę medialną.
           </p>
+        </div>
 
-          <h2 class="text-2xl max-md:text-xl font-thin text-center mb-8">
-            Napiszemy o Tobie.
-          </h2>
-          
-          <div class="max-w-4xl mx-auto mb-16">
-            <p class="text-xl max-md:text-lg text-gray max-w-2xl mx-auto text-justify mb-8">
+        {/* Napiszemy o Tobie Section */}
+        <div class="px-4 py-16 bg-background-light/30">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl max-md:text-xl font-thin text-center mb-8">
+              Napiszemy o Tobie.
+            </h2>
+            <p class="text-xl max-md:text-lg text-gray max-w-2xl mx-auto text-justify">
               Aplikacja? Program? Projekt? Napiszemy o Tobie. 
               Może jesteś twórcą, który chce się wypromować? Niezależnie od tego, 
               czym się zajmujesz, jeśli Twój projekt ma wartość społeczną lub pomaga ludziom, 
               chętnie opowiemy o nim szerokiemu gronu odbiorców.
             </p>
-
           </div>
         </div>
 
         {/* Services Section */}
-        <div class="px-4 py-16 bg-background-light/30">
+        <div class="px-4 py-16">
           <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl max-md:text-2xl font-thin text-center mb-12">
               Co oferujemy?
@@ -118,7 +121,7 @@ export default function Home() {
         </div>
 
         {/* Why Choose Us Section */}
-        <div class="px-4 py-16">
+        <div class="px-4 py-16 bg-background-light/30">
           <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl max-md:text-2xl font-thin text-center mb-12">
               Dlaczego warto wybrać ZTHype?
@@ -188,7 +191,7 @@ export default function Home() {
         </div>
 
         {/* How It Works Section */}
-        <div class="px-4 py-16 bg-background-light/30">
+        <div class="px-4 py-16">
           <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl max-md:text-2xl font-thin text-center mb-12">
               Jak to działa?
@@ -242,7 +245,7 @@ export default function Home() {
         </div>
 
         {/* Call to Action Section */}
-        <div class="px-4 py-16">
+        <div class="px-4 py-16 bg-background-light/30">
           <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl max-md:text-2xl font-thin mb-6">
               Gotowy na start?
@@ -261,7 +264,7 @@ export default function Home() {
         </div>
 
         {/* Additional Info Section */}
-        <div class="px-4 py-16 bg-background-light/30">
+        <div class="px-4 py-16">
           <div class="max-w-4xl mx-auto">
             <h2 class="text-2xl max-md:text-xl font-thin text-center mb-8">
               Dla kogo?
