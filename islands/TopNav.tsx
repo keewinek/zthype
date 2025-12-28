@@ -1,5 +1,4 @@
 import { useEffect } from "preact/hooks";
-import Button from "../components/Button.tsx";
 import { get_saved_orders } from "../utils/saved_orders.ts";
 
 export function TopNavLink({ href, text, fa_icon, toast }: { href: string; text: string, fa_icon?: string, toast?: string })
@@ -26,7 +25,8 @@ export default function TopNav() {
                         <img src="/src/brand/white_logo_text_color_transparent.png" class="h-11 mr-1 inline-block align-middle object-contain mt-[-5px]" />
                     </a>
 
-                    <span class="max-md:hidden">
+                    <span class="max-md:hidden flex items-center gap-4">
+                        <TopNavLink text="Blog" href="/blog" fa_icon="newspaper"/>
                         <TopNavLink text="Wzmianki Medialne" href="/media_mentions"/>
                     </span>
                 </div>
