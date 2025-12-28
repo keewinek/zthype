@@ -55,10 +55,9 @@ export default function Home() {
         {/* Intro Section */}
         <div class="px-4">
           <p class="text-xl max-md:text-lg text-gray max-w-2xl mx-auto text-justify mt-[5rem] mb-16">
-            Mamy wieloletnie doświadczenie w tworzeniu wysokiej jakości treści o projektach społecznych. 
-            Współpracujemy z wieloma renomowanymi blogami i stronami partnerskimi, które doceniają nasze 
-            profesjonalne podejście do każdego projektu. Dzięki naszemu doświadczeniu i rozległej sieci 
-            partnerów, pomagamy projektom społecznym zdobyć zasłużoną uwagę medialną.
+            Tworzymy wysokiej jakości treści o projektach społecznych. 
+            Współpracujemy z blogami i stronami partnerskimi, które doceniają nasze 
+            profesjonalne podejście do każdego projektu. Pomagamy projektom społecznym zdobyć zasłużoną uwagę medialną.
           </p>
         </div>
 
@@ -90,7 +89,7 @@ export default function Home() {
                   <h3 class="text-xl font-thin mb-2">Wzmianki medialne</h3>
                 </div>
                 <p class="text-gray text-center">
-                  Profesjonalne artykuły o Twoim projekcie na renomowanych blogach i stronach partnerskich. 
+                  Profesjonalne artykuły o Twoim projekcie na blogach i stronach partnerskich. 
                   Dotrzyj do szerokiego grona odbiorców zainteresowanych projektami społecznymi.
                 </p>
               </div>
@@ -101,7 +100,7 @@ export default function Home() {
                   <h3 class="text-xl font-thin mb-2">Wysokiej jakości treści</h3>
                 </div>
                 <p class="text-gray text-center">
-                  Każdy artykuł jest starannie przygotowany przez doświadczonych copywriterów. 
+                  Każdy artykuł jest starannie przygotowany. 
                   Zapewniamy unikalne, wartościowe treści dopasowane do charakteru każdego projektu.
                 </p>
               </div>
@@ -109,10 +108,10 @@ export default function Home() {
               <div class="bg-background-dark/50 p-6 rounded-lg border border-background-light/50 hover:border-pink/50 duration-200">
                 <div class="text-center mb-4">
                   <i class="fa-solid fa-network-wired text-4xl text-pink mb-4"></i>
-                  <h3 class="text-xl font-thin mb-2">Rozległa sieć partnerów</h3>
+                  <h3 class="text-xl font-thin mb-2">Sieć partnerów</h3>
                 </div>
                 <p class="text-gray text-center">
-                  Współpracujemy z wieloma renomowanymi blogami i stronami partnerskimi. 
+                  Współpracujemy z blogami i stronami partnerskimi. 
                   Wybierz te, które najlepiej pasują do Twojego projektu.
                 </p>
               </div>
@@ -134,9 +133,9 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <h3 class="text-xl font-thin mb-2">Wieloletnie doświadczenie</h3>
+                  <h3 class="text-xl font-thin mb-2">Specjalizacja w projektach społecznych</h3>
                   <p class="text-gray text-justify">
-                    Od lat specjalizujemy się w tworzeniu treści o projektach społecznych. 
+                    Specjalizujemy się w tworzeniu treści o projektach społecznych. 
                     Znamy specyfikę branży i wiemy, jak skutecznie promować wartościowe inicjatywy.
                   </p>
                 </div>
@@ -166,7 +165,7 @@ export default function Home() {
                 <div>
                   <h3 class="text-xl font-thin mb-2">Szybka realizacja</h3>
                   <p class="text-gray text-justify">
-                    Dzięki zautomatyzowanym procesom i doświadczonemu zespołowi, 
+                    Dzięki zautomatyzowanym procesom, 
                     Twoje zamówienie jest realizowane sprawnie i profesjonalnie.
                   </p>
                 </div>
