@@ -37,6 +37,7 @@ export default function Home() {
             <MediaMentionPartnerImg src="/src/socjovibe_logo.png" />
             <MediaMentionPartnerImg src="/src/mcbump_logo.png" />
             <MediaMentionPartnerImg src="/src/rbxvibecoder_logo.png" />
+            <MediaMentionPartnerImg src="/src/tiltz_games_logo.png" />
           </div>
           <p class="text-gray text-xs mt-2">
             Chcesz współpracować z nami? Napisz do nas na instagramie{" "}
