@@ -86,12 +86,22 @@ export async function write_article_for_order(order: Order)
     send_log("log",`Writing article for order #${order.id}...`)
 
     const media_mention_data = order.data as OrderMediaMentionData;
+    
+    // Normalize completed_sources to use corrected source IDs
+    // This prevents duplicates when old orders have typos in completed_sources
+    const normalized_completed_sources = media_mention_data.completed_sources.map(s => correct_source_id_typo(s));
+    
     let source_id = "";
 
     for (const selected_source of media_mention_data.selected_sources) {
         // Correct any typos in source IDs (handles old orders with typos)
         const corrected_source = correct_source_id_typo(selected_source);
-        if (media_mention_data.completed_sources.includes(corrected_source)) continue;
+        // Check against normalized completed sources to catch both old and new source IDs
+        if (normalized_completed_sources.includes(corrected_source) || 
+            media_mention_data.completed_sources.includes(corrected_source) ||
+            media_mention_data.completed_sources.includes(selected_source)) {
+            continue;
+        }
         source_id = corrected_source;
         break;
     }
@@ -186,7 +196,11 @@ export async function write_article_for_order(order: Order)
     }
 
     // Update order with completion status and timestamp in one operation
-    media_mention_data.completed_sources.push(source_id);
+    // Normalize completed_sources to prevent duplicates with different source ID formats
+    const normalized_completed = media_mention_data.completed_sources.map(s => correct_source_id_typo(s));
+    if (!normalized_completed.includes(source_id)) {
+        media_mention_data.completed_sources.push(source_id);
+    }
     media_mention_data.completed_urls.push((article as Article).url);
     order.updated_at = Date.now();
     await update_order(order);

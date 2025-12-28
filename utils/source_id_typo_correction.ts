@@ -1,7 +1,5 @@
 // Typo corrections: maps common typos to correct source IDs
 const typo_corrections: Record<string, string> = {
-    "quila_personalized_article": "qulia_personalized_article",
-    "quila_compilation": "qulia_compilation",
 };
 
 /**

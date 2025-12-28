@@ -2,7 +2,7 @@ import { Article } from "../interfaces/Article.ts";
 import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import { MediaMentionSourceConfig } from "../interfaces/MediaMentionSourceConfig.ts";
 import Order from "../interfaces/Order.ts";
-import { create_article } from "./database.ts";
+import { create_article, get_articles_by_queries, update_article, Query } from "./database.ts";
 import { send_error, send_log } from "./discord_webhook_sender.ts";
 import { ctf } from "./formatting_compiler.ts";
 import { get_random_pexels_urls } from "./get_random_pexels_url.ts";
@@ -265,6 +265,25 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     const processed_title = ctf(ai_content_data.title, formatting_variables);
     const urlid = str_to_urlid(processed_title);
     const url = ctf(source.url, { urlid: urlid })
+    
+    // Check if an article with this URL already exists to prevent duplicates
+    const existing_articles = await get_articles_by_queries([
+        Query.equal("url", url),
+        Query.equal("source_id", source.id)
+    ]);
+    
+    if (existing_articles && Array.isArray(existing_articles) && existing_articles.length > 0) {
+        send_log("log", `Article with URL ${url} already exists for source ${source.id}. Reusing existing article.`);
+        const existing_article = existing_articles[0] as Article;
+        // Add this order to the existing article if it's not already there
+        if (!existing_article.order_ids.includes(order.id)) {
+            existing_article.order_ids.push(order.id);
+            existing_article.order_ids_count = existing_article.order_ids.length;
+            await update_article(existing_article);
+            send_log("log", `Added order #${order.id} to existing article ${existing_article.uuid}`);
+        }
+        return existing_article;
+    }
 
     // Process paragraphs to replace any remaining placeholders
     const processed_paragraphs = ai_content_data.paragraphs.map(paragraph => ({
