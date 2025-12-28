@@ -1,5 +1,7 @@
 // Typo corrections: maps common typos to correct source IDs
 const typo_corrections: Record<string, string> = {
+    "qulia_personalized_article": "quila_personalized_article",
+    "qulia_compilation": "quila_compilation",
 };
 
 /**
@@ -8,7 +10,17 @@ const typo_corrections: Record<string, string> = {
  * @returns The corrected source ID, or the original if no correction is needed
  */
 export function correct_source_id_typo(source_id: string): string {
-    return typo_corrections[source_id] || source_id;
+    // First check exact match in typo corrections
+    if (typo_corrections[source_id]) {
+        return typo_corrections[source_id];
+    }
+    
+    // Handle "qulia" -> "quila" replacement in source IDs (case-insensitive)
+    if (source_id.toLowerCase().includes("qulia")) {
+        return source_id.replace(/qulia/gi, "quila");
+    }
+    
+    return source_id;
 }
 
 /**

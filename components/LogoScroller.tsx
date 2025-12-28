@@ -8,7 +8,7 @@ export default function LogoScroller() {
     "/src/actropira_logo.png",
     "/src/evenciarze_logo.png",
     "/src/ligcis_logo.png",
-    "/src/qulia_logo.png",
+    "/src/quila_logo.png",
     "/src/socjovibe_logo.png",
     "/src/mcbump_logo.png",
     "/src/rbxvibecoder_logo.png",

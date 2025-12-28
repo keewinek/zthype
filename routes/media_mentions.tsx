@@ -33,7 +33,7 @@ export default function Home() {
             <MediaMentionPartnerImg src="/src/actropira_logo.png" />
             <MediaMentionPartnerImg src="/src/evenciarze_logo.png" />
             <MediaMentionPartnerImg src="/src/ligcis_logo.png" />
-            <MediaMentionPartnerImg src="/src/qulia_logo.png" />
+            <MediaMentionPartnerImg src="/src/quila_logo.png" />
             <MediaMentionPartnerImg src="/src/socjovibe_logo.png" />
             <MediaMentionPartnerImg src="/src/mcbump_logo.png" />
             <MediaMentionPartnerImg src="/src/rbxvibecoder_logo.png" />
