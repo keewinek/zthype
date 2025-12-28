@@ -12,6 +12,7 @@ export default function LogoScroller() {
     "/src/socjovibe_logo.png",
     "/src/mcbump_logo.png",
     "/src/rbxvibecoder_logo.png",
+    "/src/tiltz_games_logo.png",
   ];
 
   // Duplicate logos for seamless infinite scroll

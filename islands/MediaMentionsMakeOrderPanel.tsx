@@ -162,6 +162,8 @@ export function MediaMentionsMakeOrderPanel()
         { source_id: "ligcis_personalized_article", title: "LigCis - Napiszemy o was." },
         { source_id: "rbxvibecoder_projects_review", title: "Vibe Coder Blog - Dodamy was do przeglądu projektów społecznych." },
         { source_id: "rbxvibecoder_personalized_article", title: "Vibe Coder Blog - Napiszemy artykuł o waszym projekcie z naciskiem na aspekty technologiczne." },
+        { source_id: "tiltz_games_projects_review", title: "Tiltz Games - Dodamy was do przeglądu projektów społecznych." },
+        { source_id: "tiltz_games_personalized_article", title: "Tiltz Games - Napiszemy artykuł o waszym projekcie z naciskiem na kulturę gier, innowacje cyfrowe i technologię w edukacji." },
     ] as SourceForPicker[];
 
     if(sources_sorted_randomly.length == 0)

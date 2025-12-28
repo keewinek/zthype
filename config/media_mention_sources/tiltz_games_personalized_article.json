@@ -1,0 +1,8 @@
+{
+    "type": "personalized",
+    "id": "tiltz_games_personalized_article",
+    "url": "https://tiltz.netlify.app/blog/%urlid%",
+    "max_orders": 1,
+    "prompt": "Write an article about a social project completed as part of Zwolnieni z Teorii, named %project_title%. Project description: %project_description%. Create a title for the article, and send the entire article to me in JSON format that looks like this: {\"title\": \"ENTER TITLE HERE\", \"paragraphs\": [{\"header\" : \"ENTER FIRST PARAGRAPH TITLE\", \"content\": \"ENTER CONTENT\"}, {\"header\" : \"ENTER SECOND PARAGRAPH TITLE\", \"content\": \"ENTER CONTENT\"}]}. The content should be approximately 500 words (4-5 paragraphs) and have no formatting like bold text, links, or anything of that sort. When writing the article and creating the title, focus on gaming culture, digital innovation, technology in education, and how social projects can leverage digital tools and gaming principles to create meaningful impact. The blog you're writing for is called Tiltz Games, a platform dedicated to free browser games and digital entertainment. Connect the project's goals and achievements to themes of digital engagement, interactive learning, and the intersection of technology and social good."
+}
+
