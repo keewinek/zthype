@@ -24,7 +24,6 @@ export async function create_new_personalized_article(order: Order, source: Medi
     }
 
     if (!source.prompt) {
-        const order_media_mention_data = order.data as OrderMediaMentionData;
         send_error(
             `No prompt found for source ${source.id}!`,
             {
@@ -98,7 +97,6 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
         if (json_start !== -1 && json_end !== -1 && json_end > json_start) {
             json_string = ai_content.substring(json_start, json_end + 1);
         } else {
-            const order_media_mention_data = order.data as OrderMediaMentionData;
             send_error(
                 `Invalid AI response format for source ${source.id}! Expected JSON but got: ${ai_content.substring(0, 500)}${ai_content.length > 500 ? "..." : ""}`,
                 {
@@ -124,7 +122,6 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     try {
         ai_content_data = robustJsonParse(json_string);
     } catch (parse_error) {
-        const order_media_mention_data = order.data as OrderMediaMentionData;
         const error_message = parse_error instanceof Error ? parse_error.message : String(parse_error);
         send_error(
             `Failed to parse AI JSON response for source ${source.id}! Parse error: ${error_message}. Response was: ${json_string.substring(0, 1000)}${json_string.length > 1000 ? "..." : ""}`,
@@ -147,7 +144,6 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     }
 
     // Validate required fields
-    const order_media_mention_data = order.data as OrderMediaMentionData;
     const base_context = {
         order_id: order.id,
         source_id: source.id,
@@ -278,7 +274,6 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     const img_urls: string[] = []
 
     if (all_img_urls.length < ai_content_data.paragraphs.length) {
-        const order_media_mention_data = order.data as OrderMediaMentionData;
         send_error(
             `Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${ai_content_data.paragraphs.length}!`,
             {

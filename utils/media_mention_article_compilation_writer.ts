@@ -31,7 +31,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
         const target_article = await create_new_compilation_article(order, source, next_index);
         if ('error' in target_article) {
             send_error(`Error creating article for source ${source.id}: ${target_article.error}`);
-            return {"error": target_article.error};
+            return {"error": target_article.error || "Unknown error"};
         }
         return target_article
     }
@@ -48,7 +48,7 @@ export async function add_order_to_compilation_article(order: Order, source: Med
 
     if ('error' in out) {
         send_error(`Error updating article for source ${source.id}: ${out.error}`);
-        return {"error": out.error}
+        return {"error": out.error || "Unknown error"}
     }
 
     send_article_creation_message(target_article as Article);
@@ -83,7 +83,7 @@ export async function create_new_compilation_article(order: Order, source: Media
     const out = await create_article(target_article);
     if ('error' in out) {
         send_error(`Error creating article for source ${source.id}: ${out.error}`);
-        return out;
+        return { error: out.error || "Unknown error" };
     }
 
     send_article_creation_message(target_article);
