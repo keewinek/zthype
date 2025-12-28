@@ -219,7 +219,7 @@ Create `blog/index.html`:
         </div>
         
         <!-- Articles grid -->
-        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+        <div id="articles-grid" class="hidden">
             <!-- Articles will be inserted here by JavaScript -->
         </div>
     </div>
@@ -257,6 +257,7 @@ Create `blog/index.html`:
                 }
                 
                 gridEl.classList.remove('hidden');
+                gridEl.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3', 'gap-6');
                 
                 // Render articles
                 gridEl.innerHTML = articles.map(article => `
