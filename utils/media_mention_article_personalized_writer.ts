@@ -261,21 +261,29 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
         }
     }
 
-    const urlid = str_to_urlid(ai_content_data.title);
+    // Process title to replace any remaining placeholders
+    const processed_title = ctf(ai_content_data.title, formatting_variables);
+    const urlid = str_to_urlid(processed_title);
     const url = ctf(source.url, { urlid: urlid })
 
+    // Process paragraphs to replace any remaining placeholders
+    const processed_paragraphs = ai_content_data.paragraphs.map(paragraph => ({
+        header: ctf(paragraph.header, formatting_variables),
+        content: ctf(paragraph.content, formatting_variables)
+    }));
+
     const str_paragraphs = []
-    for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
-        str_paragraphs.push(JSON.stringify(ai_content_data.paragraphs[i]))
+    for (let i = 0; i < processed_paragraphs.length; i++) {
+        str_paragraphs.push(JSON.stringify(processed_paragraphs[i]))
     }
 
     // Fetch images in parallel while processing other data
-    const all_img_urls: string[] = await get_random_pexels_urls(ai_content_data.paragraphs.length) || [];
+    const all_img_urls: string[] = await get_random_pexels_urls(processed_paragraphs.length) || [];
     const img_urls: string[] = []
 
-    if (all_img_urls.length < ai_content_data.paragraphs.length) {
+    if (all_img_urls.length < processed_paragraphs.length) {
         send_error(
-            `Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${ai_content_data.paragraphs.length}!`,
+            `Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${processed_paragraphs.length}!`,
             {
                 order_id: order.id,
                 source_id: source.id,
@@ -286,14 +294,14 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
                 error_type: "Image Fetch Error",
                 additional_info: {
                     "Images Found": String(all_img_urls.length),
-                    "Images Expected": String(ai_content_data.paragraphs.length),
-                    "Paragraphs Count": String(ai_content_data.paragraphs.length)
+                    "Images Expected": String(processed_paragraphs.length),
+                    "Paragraphs Count": String(processed_paragraphs.length)
                 }
             }
         );
     }
     else {
-        for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
+        for (let i = 0; i < processed_paragraphs.length; i++) {
             if (get_random_int(0,100) < 50) {
                 img_urls.push(all_img_urls[i]);
             } else {
@@ -306,7 +314,7 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
         type: "personalized",
         created_at: Date.now(),
         updated_at: Date.now(),
-        title: ai_content_data.title,
+        title: processed_title,
         content: ai_content_data.content,
         order_ids: [order.id],
         order_ids_count: 1,
