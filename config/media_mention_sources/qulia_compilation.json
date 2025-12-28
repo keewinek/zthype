@@ -1,8 +1,0 @@
-{
-    "type": "compilation",
-    "title": "Przeglad projektów zwolnionych część %index%",
-    "id": "quila_compilation",
-    "urlid" : "przeglad_projektow_zwolnionych_czesc_%index%",
-    "url": "https://quila.fwh.is/blog/przeglad_projektow_zwolnionych_czesc_%index%",
-    "max_orders": 20
-}
