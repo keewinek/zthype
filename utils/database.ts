@@ -6,12 +6,13 @@ import { Article } from "../interfaces/Article.ts";
 // Query helper to replace Appwrite SDK Query
 export const Query = {
     equal: (key: string, value: unknown) => ({ type: 'equal', key, value }),
+    greaterThanOrEqual: (key: string, value: unknown) => ({ type: 'greaterThanOrEqual', key, value }),
     orderDesc: (key: string) => ({ type: 'orderDesc', key }),
     orderAsc: (key: string) => ({ type: 'orderAsc', key }),
     limit: (n: number) => ({ type: 'limit', value: n }),
 };
 
-export type QueryType = ReturnType<typeof Query.equal> | ReturnType<typeof Query.orderDesc> | ReturnType<typeof Query.orderAsc> | ReturnType<typeof Query.limit>;
+export type QueryType = ReturnType<typeof Query.equal> | ReturnType<typeof Query.greaterThanOrEqual> | ReturnType<typeof Query.orderDesc> | ReturnType<typeof Query.orderAsc> | ReturnType<typeof Query.limit>;
 
 // Turso database configuration
 const TURSO_URL = Deno.env.get("TURSO_DATABASE_URL") || "libsql://zthype-keewinek.aws-eu-west-1.turso.io";
@@ -215,6 +216,10 @@ export async function get_orders_by_queries(queries: QueryType[]) {
                     conditions.push(`${equalQuery.key} = ?`);
                     values.push(equalQuery.value);
                 }
+            } else if (q.type === 'greaterThanOrEqual') {
+                const gteQuery = q as { type: 'greaterThanOrEqual'; key: string; value: unknown };
+                conditions.push(`${gteQuery.key} >= ?`);
+                values.push(gteQuery.value);
             } else if (q.type === 'orderDesc') {
                 const orderDescQuery = q as { type: 'orderDesc'; key: string };
                 orderClause = ` ORDER BY ${orderDescQuery.key} DESC`;
@@ -268,6 +273,10 @@ export async function get_articles_by_queries(queries: QueryType[]) {
                     conditions.push(`${equalQuery.key} = ?`);
                     values.push(equalQuery.value);
                 }
+            } else if (q.type === 'greaterThanOrEqual') {
+                const gteQuery = q as { type: 'greaterThanOrEqual'; key: string; value: unknown };
+                conditions.push(`${gteQuery.key} >= ?`);
+                values.push(gteQuery.value);
             } else if (q.type === 'orderDesc') {
                 const orderDescQuery = q as { type: 'orderDesc'; key: string };
                 orderClause = ` ORDER BY ${orderDescQuery.key} DESC`;
@@ -488,6 +497,27 @@ export async function create_article(article: Article) {
     } catch (e) {
         send_error(`[DB Articles] Failed to create article: ${e}`);
         return { "error": String(e) };
+    }
+}
+
+export async function delete_article(uuid: string): Promise<{ success: boolean; error?: string }> {
+    await connect_client();
+    if (!client) return { success: false, error: "Database not connected" };
+
+    try {
+        const result = await client.execute({
+            sql: `DELETE FROM articles WHERE uuid = ?`,
+            args: [uuid]
+        });
+
+        if (result.rowsAffected === 0) {
+            return { success: false, error: "Article not found" };
+        }
+
+        return { success: true };
+    } catch (e) {
+        send_error(`[DB Articles] Failed to delete article: ${e}`);
+        return { success: false, error: String(e) };
     }
 }
 
