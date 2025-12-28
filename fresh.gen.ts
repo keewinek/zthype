@@ -5,6 +5,7 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $admin_codes from "./routes/admin/codes.tsx";
+import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_orders from "./routes/admin/orders.tsx";
 import * as $api_admin_accept_order from "./routes/api/admin_accept_order.ts";
 import * as $api_admin_create_code from "./routes/api/admin_create_code.ts";
@@ -26,6 +27,7 @@ import * as $orders_index from "./routes/orders/index.tsx";
 import * as $polityka_prywatnosci from "./routes/polityka-prywatnosci.tsx";
 import * as $regulamin from "./routes/regulamin.tsx";
 import * as $AdminCodesPage from "./islands/AdminCodesPage.tsx";
+import * as $AdminIndexPage from "./islands/AdminIndexPage.tsx";
 import * as $AdminOrdersPage from "./islands/AdminOrdersPage.tsx";
 import * as $ArticlePage from "./islands/ArticlePage.tsx";
 import * as $LoadingScreen from "./islands/LoadingScreen.tsx";
@@ -41,6 +43,7 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/admin/codes.tsx": $admin_codes,
+    "./routes/admin/index.tsx": $admin_index,
     "./routes/admin/orders.tsx": $admin_orders,
     "./routes/api/admin_accept_order.ts": $api_admin_accept_order,
     "./routes/api/admin_create_code.ts": $api_admin_create_code,
@@ -65,6 +68,7 @@ const manifest = {
   },
   islands: {
     "./islands/AdminCodesPage.tsx": $AdminCodesPage,
+    "./islands/AdminIndexPage.tsx": $AdminIndexPage,
     "./islands/AdminOrdersPage.tsx": $AdminOrdersPage,
     "./islands/ArticlePage.tsx": $ArticlePage,
     "./islands/LoadingScreen.tsx": $LoadingScreen,

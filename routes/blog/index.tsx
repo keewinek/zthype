@@ -97,7 +97,7 @@ export default async function BlogHome(props: PageProps) {
                   >
                     {/* Article Image */}
                     <div class="w-full h-48 overflow-hidden bg-background-light flex items-center justify-center">
-                      {article.img_urls && article.img_urls.length > 0 ? (
+                      {article.img_urls?.[0]?.trim() ? (
                         <img
                           src={article.img_urls[0]}
                           alt={article.title}
