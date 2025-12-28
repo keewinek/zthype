@@ -27,7 +27,18 @@ export async function create_new_personalized_article(order: Order, source: Medi
         return { error: "No prompt found!" };
     }
 
-    const ai_prompt = ctf(source.prompt, formatting_variables);
+    // Enhance prompt with SEO guidelines
+    const seo_guidelines = `
+WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
+- Naturalnie wpleć nazwę projektu (%project_title%) i powiązane słowa kluczowe w treść (unikaj keyword stuffing)
+- Upewnij się, że tytuł jest atrakcyjny, zawiera słowa kluczowe i ma 50-60 znaków
+- Każdy nagłówek sekcji (header) powinien być konkretny, opisowy i zawierać istotne słowa kluczowe
+- Pisz w sposób naturalny - unikaj powtarzania tych samych fraz
+- Każdy akapit powinien być wartościowy i unikalny
+- Napisz to jak człowiek, który pisze artykuły internetowe od siebie, nie jak sztuczna inteligencja.`;
+
+    const base_prompt = ctf(source.prompt, formatting_variables);
+    const ai_prompt = base_prompt + seo_guidelines;
     
     // Start GPT request and prepare for parallel execution
     const ai_response_promise = get_gpt_content(ai_prompt);

@@ -18,10 +18,10 @@ export async function send_nvidia_request(
         "model": MODEL,
         "messages": messages,
         "max_tokens": 8192,
-        "temperature": 1.00,
-        "top_p": 1.00,
-        "frequency_penalty": 0.00,
-        "presence_penalty": 0.00,
+        "temperature": 0.75,
+        "top_p": 0.95,
+        "frequency_penalty": 0.3,
+        "presence_penalty": 0.2,
         "stream": STREAM
     };
 
