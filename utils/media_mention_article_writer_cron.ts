@@ -55,12 +55,40 @@ export async function trigger_article_writer_cron()
                 // Process the order (this will update updated_at internally)
                 await write_article_for_order(order);
             } catch (e) {
-                send_error(`Error processing order #${order.id} in cron: ${e}`);
+                const media_mention_data = order.data as OrderMediaMentionData;
+                const error_message = e instanceof Error ? e.message : String(e);
+                const stack_trace = e instanceof Error ? e.stack : undefined;
+                
+                send_error(
+                    `Error processing order #${order.id} in cron: ${error_message}`,
+                    {
+                        order_id: order.id,
+                        contact_email: order.contact_email,
+                        order_type: order.type,
+                        project_name: media_mention_data?.project_name,
+                        project_link: media_mention_data?.project_link,
+                        error_type: "Cron Processing Error",
+                        stack_trace: stack_trace,
+                        additional_info: {
+                            "Completed Sources": media_mention_data?.completed_sources?.join(", ") || "None",
+                            "Selected Sources": media_mention_data?.selected_sources?.join(", ") || "None"
+                        }
+                    }
+                );
             }
         }));
     }
     catch (e) {
-        send_error(`Error in article writer cron: ${e}`);
+        const error_message = e instanceof Error ? e.message : String(e);
+        const stack_trace = e instanceof Error ? e.stack : undefined;
+        
+        send_error(
+            `Error in article writer cron: ${error_message}`,
+            {
+                error_type: "Cron Execution Error",
+                stack_trace: stack_trace
+            }
+        );
     }
 }
 

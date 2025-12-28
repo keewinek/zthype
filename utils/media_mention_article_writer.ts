@@ -23,7 +23,16 @@ export async function load_source_data(source: string)
 
     if (!existsSync(source_path))
     {
-        send_error(`Source config file for ${source} does not exist.`);
+        send_error(
+            `Source config file for ${source} does not exist.`,
+            {
+                source_id: source,
+                error_type: "Configuration Error",
+                additional_info: {
+                    "Config Path": source_path
+                }
+            }
+        );
         return null;
     }
 
@@ -67,14 +76,39 @@ export async function write_article_for_order(order: Order)
     }
 
     if (source_id == "") { 
-        send_error(`No source found for order #${order.id}.`);
+        const media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `No source found for order #${order.id}.`,
+            {
+                order_id: order.id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: media_mention_data.project_name,
+                error_type: "Source Selection Error",
+                additional_info: {
+                    "Completed Sources": media_mention_data.completed_sources.join(", ") || "None",
+                    "Selected Sources": media_mention_data.selected_sources.join(", ") || "None"
+                }
+            }
+        );
         return; 
     }
     
     const source_data = await load_source_data(source_id) as MediaMentionSourceConfig;
     
     if (source_data == null) { 
-        send_error(`Source config file for ${source_id} does not exist.`);
+        const media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `Source config file for ${source_id} does not exist.`,
+            {
+                order_id: order.id,
+                source_id: source_id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: media_mention_data.project_name,
+                error_type: "Configuration Error"
+            }
+        );
         return; 
     }
     
@@ -90,12 +124,43 @@ export async function write_article_for_order(order: Order)
     }
     else 
     {
-        send_error(`Source type ${source_data.type} not supported.`);
+        const media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `Source type ${source_data.type} not supported.`,
+            {
+                order_id: order.id,
+                source_id: source_id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: media_mention_data.project_name,
+                error_type: "Configuration Error",
+                additional_info: {
+                    "Source Type": source_data.type || "Unknown"
+                }
+            }
+        );
         return;
     }
 
     if ('error' in article) {
-        send_error(`Error processing order #${order.id} for source ${source_id}: ${article.error}`);
+        const media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `Error processing order #${order.id} for source ${source_id}: ${article.error}`,
+            {
+                order_id: order.id,
+                source_id: source_id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: media_mention_data.project_name,
+                project_link: media_mention_data.project_link,
+                error_type: "Article Generation Error",
+                additional_info: {
+                    "Completed Sources": media_mention_data.completed_sources.join(", ") || "None",
+                    "Selected Sources": media_mention_data.selected_sources.join(", "),
+                    "Error Message": article.error
+                }
+            }
+        );
         return;
     }
 

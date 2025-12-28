@@ -3,6 +3,7 @@ import OrderMediaMentionData from "../interfaces/MediaMentionData.ts";
 import { Paragraph } from "../interfaces/Paragraph.ts";
 import { get_order_by_value } from "./database.ts";
 import { send_error } from "./discord_webhook_sender.ts";
+import { robustJsonParse } from "./robust_json_parser.ts";
 
 export default async function get_paragraphs_from_article(article: Article)
 {
@@ -51,7 +52,7 @@ export default async function get_paragraphs_from_article(article: Article)
 
         for (let i = 0; i < article.generated_paragraphs.length; i++)
         {
-            const generated_paragraph = JSON.parse(article.generated_paragraphs[i])
+            const generated_paragraph = robustJsonParse(article.generated_paragraphs[i])
 
             const paragraph = {
                 content: generated_paragraph.content,

@@ -8,6 +8,7 @@ import { ctf } from "./formatting_compiler.ts";
 import { get_random_pexels_urls } from "./get_random_pexels_url.ts";
 import get_gpt_content from "./gpt_prompter.ts";
 import { get_random_int } from "./random.ts";
+import { robustJsonParse } from "./robust_json_parser.ts";
 import { send_article_creation_message } from "./special_discord_webhook_sender.ts";
 import { str_to_urlid } from "./urlid.ts";
 
@@ -23,7 +24,19 @@ export async function create_new_personalized_article(order: Order, source: Medi
     }
 
     if (!source.prompt) {
-        send_error(`No prompt found for source ${source.id}!`)
+        const order_media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `No prompt found for source ${source.id}!`,
+            {
+                order_id: order.id,
+                source_id: source.id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: order_media_mention_data.project_name,
+                project_link: order_media_mention_data.project_link,
+                error_type: "Configuration Error"
+            }
+        );
         return { error: "No prompt found!" };
     }
 
@@ -85,38 +98,121 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
         if (json_start !== -1 && json_end !== -1 && json_end > json_start) {
             json_string = ai_content.substring(json_start, json_end + 1);
         } else {
-            send_error(`Invalid AI response format for source ${source.id}! Expected JSON but got: ${"```"}${ai_content.substring(0, 500)}${ai_content.length > 500 ? "..." : ""}${"```"}`);
+            const order_media_mention_data = order.data as OrderMediaMentionData;
+            send_error(
+                `Invalid AI response format for source ${source.id}! Expected JSON but got: ${ai_content.substring(0, 500)}${ai_content.length > 500 ? "..." : ""}`,
+                {
+                    order_id: order.id,
+                    source_id: source.id,
+                    contact_email: order.contact_email,
+                    order_type: order.type,
+                    project_name: order_media_mention_data.project_name,
+                    project_link: order_media_mention_data.project_link,
+                    error_type: "AI Response Format Error",
+                    additional_info: {
+                        "AI Response Preview": ai_content.substring(0, 500) + (ai_content.length > 500 ? "..." : ""),
+                        "Response Length": `${ai_content.length} characters`
+                    }
+                }
+            );
             return { error: "Invalid AI response!" };
         }
     }
 
-    // Parse the JSON
+    // Parse the JSON using robust parser
     let ai_content_data;
     try {
-        ai_content_data = JSON.parse(json_string);
+        ai_content_data = robustJsonParse(json_string);
     } catch (parse_error) {
-        send_error(`Failed to parse AI JSON response for source ${source.id}! Parse error: ${parse_error}. Response was: ${"```"}${json_string.substring(0, 500)}${json_string.length > 500 ? "..." : ""}${"```"}`);
+        const order_media_mention_data = order.data as OrderMediaMentionData;
+        const error_message = parse_error instanceof Error ? parse_error.message : String(parse_error);
+        send_error(
+            `Failed to parse AI JSON response for source ${source.id}! Parse error: ${error_message}. Response was: ${json_string.substring(0, 1000)}${json_string.length > 1000 ? "..." : ""}`,
+            {
+                order_id: order.id,
+                source_id: source.id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: order_media_mention_data.project_name,
+                project_link: order_media_mention_data.project_link,
+                error_type: "JSON Parse Error",
+                additional_info: {
+                    "JSON String Preview": json_string.substring(0, 500) + (json_string.length > 500 ? "..." : ""),
+                    "JSON String Length": `${json_string.length} characters`,
+                    "Parse Error": error_message
+                }
+            }
+        );
         return { error: "Invalid AI response!" };
     }
 
     // Validate required fields
+    const order_media_mention_data = order.data as OrderMediaMentionData;
+    const base_context = {
+        order_id: order.id,
+        source_id: source.id,
+        contact_email: order.contact_email,
+        order_type: order.type,
+        project_name: order_media_mention_data.project_name,
+        project_link: order_media_mention_data.project_link,
+        error_type: "AI Response Validation Error"
+    };
+
     if (!ai_content_data || typeof ai_content_data !== "object") {
-        send_error(`Invalid AI JSON response for source ${source.id}! Response is not an object: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+        send_error(
+            `Invalid AI JSON response for source ${source.id}! Response is not an object.`,
+            {
+                ...base_context,
+                additional_info: {
+                    "Response Type": typeof ai_content_data,
+                    "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                }
+            }
+        );
         return { error: "Invalid AI response!" };
     }
 
     if (!ai_content_data.title || typeof ai_content_data.title !== "string") {
-        send_error(`Invalid AI JSON response for source ${source.id}! Missing or invalid 'title' field. Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+        send_error(
+            `Invalid AI JSON response for source ${source.id}! Missing or invalid 'title' field.`,
+            {
+                ...base_context,
+                additional_info: {
+                    "Title Value": ai_content_data.title ? String(ai_content_data.title) : "Missing",
+                    "Title Type": typeof ai_content_data.title,
+                    "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                }
+            }
+        );
         return { error: "Invalid AI response!" };
     }
 
     if (!ai_content_data.paragraphs || !Array.isArray(ai_content_data.paragraphs)) {
-        send_error(`Invalid AI JSON response for source ${source.id}! Missing or invalid 'paragraphs' field (must be an array). Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+        send_error(
+            `Invalid AI JSON response for source ${source.id}! Missing or invalid 'paragraphs' field (must be an array).`,
+            {
+                ...base_context,
+                additional_info: {
+                    "Paragraphs Value": ai_content_data.paragraphs ? String(ai_content_data.paragraphs) : "Missing",
+                    "Paragraphs Type": typeof ai_content_data.paragraphs,
+                    "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                }
+            }
+        );
         return { error: "Invalid AI response!" };
     }
 
     if (ai_content_data.paragraphs.length === 0) {
-        send_error(`Invalid AI JSON response for source ${source.id}! 'paragraphs' array is empty. Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+        send_error(
+            `Invalid AI JSON response for source ${source.id}! 'paragraphs' array is empty.`,
+            {
+                ...base_context,
+                additional_info: {
+                    "Paragraphs Count": "0",
+                    "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                }
+            }
+        );
         return { error: "Invalid AI response!" };
     }
 
@@ -124,15 +220,47 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
         const paragraph = ai_content_data.paragraphs[i];
         if (!paragraph || typeof paragraph !== "object") {
-            send_error(`Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is not an object. Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+            send_error(
+                `Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is not an object.`,
+                {
+                    ...base_context,
+                    additional_info: {
+                        "Paragraph Index": String(i),
+                        "Paragraph Type": typeof paragraph,
+                        "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                    }
+                }
+            );
             return { error: "Invalid AI response!" };
         }
         if (!paragraph.header || typeof paragraph.header !== "string") {
-            send_error(`Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is missing or has invalid 'header' field. Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+            send_error(
+                `Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is missing or has invalid 'header' field.`,
+                {
+                    ...base_context,
+                    additional_info: {
+                        "Paragraph Index": String(i),
+                        "Header Value": paragraph.header ? String(paragraph.header) : "Missing",
+                        "Header Type": typeof paragraph.header,
+                        "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                    }
+                }
+            );
             return { error: "Invalid AI response!" };
         }
         if (!paragraph.content || typeof paragraph.content !== "string") {
-            send_error(`Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is missing or has invalid 'content' field. Response: ${"```"}${JSON.stringify(ai_content_data)}${"```"}`);
+            send_error(
+                `Invalid AI JSON response for source ${source.id}! Paragraph at index ${i} is missing or has invalid 'content' field.`,
+                {
+                    ...base_context,
+                    additional_info: {
+                        "Paragraph Index": String(i),
+                        "Content Value": paragraph.content ? String(paragraph.content).substring(0, 200) : "Missing",
+                        "Content Type": typeof paragraph.content,
+                        "Response Preview": JSON.stringify(ai_content_data).substring(0, 500)
+                    }
+                }
+            );
             return { error: "Invalid AI response!" };
         }
     }
@@ -150,7 +278,24 @@ WAŻNE WYTYCZNE SEO I JAKOŚCI TREŚCI:
     const img_urls: string[] = []
 
     if (all_img_urls.length < ai_content_data.paragraphs.length) {
-        send_error(`Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${ai_content_data.paragraphs.length}!`);
+        const order_media_mention_data = order.data as OrderMediaMentionData;
+        send_error(
+            `Not enough images found for source ${source.id}! Got ${all_img_urls.length} images, expected ${ai_content_data.paragraphs.length}!`,
+            {
+                order_id: order.id,
+                source_id: source.id,
+                contact_email: order.contact_email,
+                order_type: order.type,
+                project_name: order_media_mention_data.project_name,
+                project_link: order_media_mention_data.project_link,
+                error_type: "Image Fetch Error",
+                additional_info: {
+                    "Images Found": String(all_img_urls.length),
+                    "Images Expected": String(ai_content_data.paragraphs.length),
+                    "Paragraphs Count": String(ai_content_data.paragraphs.length)
+                }
+            }
+        );
     }
     else {
         for (let i = 0; i < ai_content_data.paragraphs.length; i++) {
