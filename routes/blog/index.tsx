@@ -2,6 +2,7 @@ import { PageProps } from "$fresh/server.ts";
 import TopNav from "../../islands/TopNav.tsx";
 import { Article } from "../../interfaces/Article.ts";
 import { MediaMentionSourceConfig } from "../../interfaces/MediaMentionSourceConfig.ts";
+import { get_articles_by_queries, Query } from "../../utils/database.ts";
 
 async function getZTHypeSourceIds(): Promise<string[]> {
   try {
@@ -35,7 +36,7 @@ async function getZTHypeSourceIds(): Promise<string[]> {
   }
 }
 
-async function fetchArticles(requestUrl: string): Promise<Article[]> {
+async function fetchArticles(): Promise<Article[]> {
   try {
     const sourceIds = await getZTHypeSourceIds();
     
@@ -43,20 +44,21 @@ async function fetchArticles(requestUrl: string): Promise<Article[]> {
       return [];
     }
     
-    // Construct API URL from request URL
-    const url = new URL(requestUrl);
-    const baseUrl = `${url.protocol}//${url.host}`;
-    const apiUrl = `${baseUrl}/api/get_articles_form_source_ids?source_ids=${sourceIds.join(",")}`;
+    // Directly call the database function instead of making an HTTP request
+    const out_data = await get_articles_by_queries([
+      Query.equal("source_id", sourceIds),
+      Query.orderDesc("created_at")
+    ]);
     
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    
-    if (data.success && Array.isArray(data.articles)) {
-      // Sort by created_at descending (newest first)
-      return data.articles.sort((a: Article, b: Article) => b.created_at - a.created_at);
+    // Handle error case
+    if (out_data && 'error' in out_data) {
+      console.error("Error fetching articles:", out_data.error);
+      return [];
     }
     
-    return [];
+    // Return articles array (or empty array if null)
+    const articles = out_data || [];
+    return articles;
   } catch (error) {
     console.error("Error fetching articles:", error);
     return [];
@@ -64,7 +66,7 @@ async function fetchArticles(requestUrl: string): Promise<Article[]> {
 }
 
 export default async function BlogHome(props: PageProps) {
-  const articles = await fetchArticles(props.url);
+  const articles = await fetchArticles();
 
   return (
     <>
