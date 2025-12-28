@@ -262,6 +262,26 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Nasze realizacje Section */}
+        <div class="px-4 py-16">
+          <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl max-md:text-2xl font-thin mb-6">
+              Nasze realizacje
+            </h2>
+            <p class="text-xl max-md:text-lg text-gray mb-8 max-w-2xl mx-auto">
+              Przez lata działalności stworzyliśmy setki profesjonalnych artykułów i wzmianek medialnych 
+              dla różnorodnych projektów społecznych. Każde zamówienie to unikalna historia, 
+              którą opowiadamy z pasją i zaangażowaniem.
+            </p>
+            <a 
+              href="/random-order" 
+              class="inline-block bg-pink/25 hover:bg-pink/80 text-white px-8 py-4 rounded-md text-lg duration-200 no-underline hover:no-underline"
+            >
+              Zobacz losowe zamówienie
+            </a>
+          </div>
+        </div>
+
         {/* Additional Info Section */}
         <div class="px-4 py-16">
           <div class="max-w-4xl mx-auto">
