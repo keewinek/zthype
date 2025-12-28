@@ -5,6 +5,7 @@ import { create_order, get_next_order_id, get_order_by_value } from "../../utils
 export const handler = async (_req: Request, _ctx: FreshContext): Promise<Response> => {
 	const url = new URL(_req.url);
 	const ids_str = url.searchParams.get("ids");
+	const admin_password = url.searchParams.get("admin_password");
 
 	if (!ids_str) {
 		return new Response(JSON.stringify({"error" : "Missing parameters"}), { status: 400 });
@@ -17,6 +18,10 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
 
     let error = "";
 
+	// Check if user is admin
+	const correct_password = Deno.env.get("ADMIN_PASSWORD");
+	const is_admin = admin_password && admin_password === correct_password;
+
     for (let i = 0; i < out_datas.length; i++) {
         const out_data = out_datas[i];
         if (out_data == null || 'error' in out_data) {
@@ -24,7 +29,10 @@ export const handler = async (_req: Request, _ctx: FreshContext): Promise<Respon
             continue;
         }
 
-        orders.push(out_data as Order);
+        const order = out_data as Order;
+		// Remove contact_email for non-admin users (RODO compliance)
+		const order_response = is_admin ? order : { ...order, contact_email: undefined };
+        orders.push(order_response as Order);
     }
 
     if (error.length > 0) {

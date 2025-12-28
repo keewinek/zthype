@@ -107,7 +107,12 @@ export default function OrderPage({order_id} : {order_id: number}) {
 
     useEffect(() => {
         const fetch_order = async () => {
-            const response = await fetch(`/api/get_order?id=${order_id}`);
+            const admin_pass = localStorage.getItem("admin") || "";
+            const url = admin_pass 
+                ? `/api/get_order?id=${order_id}&admin_password=${encodeURIComponent(admin_pass)}`
+                : `/api/get_order?id=${order_id}`;
+            
+            const response = await fetch(url);
 
             if (!response.ok) {
                 console.error(response);
@@ -157,7 +162,9 @@ export default function OrderPage({order_id} : {order_id: number}) {
                                 <h2 class="my-2 text-center">Wzmianka medialna dla projektu {(order.data as OrderMediaMentionData).project_name}</h2>
                                 
                                 <p><b class="text-pink"><i class="fa-solid fa-check-circle w-6"></i>Status zamówienia:</b><OrderStatusBadge order={order}/></p>
-                                <p><b class="text-pink"><i class="fa-solid fa-at w-6"></i>Email kontaktowy:</b> {order.contact_email}</p>
+                                {admin_password != "" && order.contact_email && (
+                                    <p><b class="text-pink"><i class="fa-solid fa-at w-6"></i>Email kontaktowy:</b> {order.contact_email}</p>
+                                )}
                                 <p><b class="text-pink"><i class="fa-solid fa-heading w-6"></i>Nazwa projektu:</b> {(order.data as OrderMediaMentionData).project_name}</p>
                                 <p class="text-justify"><b class="text-pink"><i class="fa-solid fa-file-lines w-6"></i>Opis projektu:</b> {(order.data as OrderMediaMentionData).project_desc}</p>
                                 <p><b class="text-pink"><i class="fa-solid fa-link w-6"></i>Link do projektu (sociale):</b> <a href={(order.data as OrderMediaMentionData).project_link} target="_blank" rel="noopener noreferrer">{(order.data as OrderMediaMentionData).project_link}</a></p>
